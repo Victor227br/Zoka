@@ -4,6 +4,8 @@ body{
     background-color: #e8e9eb;
     font-family: "Google Sans Flex", sans-serif;
     font-optical-sizing: auto;
+      overflow-x: hidden;
+
     font-weight: weight;
     font-style: normal;
     font-variation-settings:
