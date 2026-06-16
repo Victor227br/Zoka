@@ -1,40 +1,52 @@
 
 const AdminProductItem = () => {
+
   return (
-    <div className="
-        bg-white
-        rounded-1xl
-        shadow-sm
-        p-4
-        border
-        border-slate-100">
-        
-    <div className="flex flex-row items-center justify-between">
-        <div className="flex flex-row gap-3">
-        <img className="h-10 rounded-xl" src="/src/assets/picture/cappuccino.jpg" alt=""/>
-            <div>
-                <h3 className="font-bold text-[#1D3557] text-[70%]">Cappucino</h3>
-                <p className="text-[65%] text-slate-500">Price: $9.33</p>
-            </div>
-        </div>
+<div className=" bg-white rounded-xl shadow-sm p-4 border border-slate-100">
+  <div className="flex items-center justify-between lg:mr-7 lg:ml-5">
 
-        <div className="bg-[#E6FCE7] flex flex-row items-center justify-center gap-1 rounded-2xl w-[18%] h-5 ml-5 mr-4">
-            <div className="bg-[#22C55E] w-2 h-2 rounded-full"></div>
-            <h2 className="text-[#22C55E] text-[70%]">Ativo</h2>
-        </div>
+    <div className="flex items-center gap-3">
 
-        <div className="flex items-center gap-2 ">
-            <button className="bg-[#EEF4FF] rounded-lg w-8 h-8 flex items-center justify-center" >
-                <img className="h-6" src="/src/assets/icon/icon_edit.png" alt=""/>
-            </button>
+      <img className="h-14 w-14 rounded-xl object-cover" src="/src/assets/picture/cappuccino.jpg" alt=""/>
 
-            <button className="bg-[#FEEAEA] flex items-center justify-center w-8 h-8 rounded-lg">
-                <img className="h-5" src="/src/assets/icon/icon_trash.png" alt=""/>
-            </button>
-        </div>
-            
+      <div className="flex flex-col justify-center gap-1">
+        <h3 className="font-bold text-[#1D3557] text-xs ">Cappuccino</h3>
+        <p className="text-[#0344DC] text-xs font-medium">Hot Drink</p>
+        <p className="text-xs text-slate-500">Price: $9.33</p>
+      </div>
+
     </div>
+
+   <div className="flex flex-col ">
+
+
+  <div className="flex flex-col items-center">
+    <p className="text-[12px] text-slate-500">Stock</p>
+
+    <h3 className="font-bold text-slate-800">33</h3>
+  </div>
+
+  <div className="bg-[#E6FCE7] px-2 rounded-full flex items-center justify-center gap-1 ">
+    <div className="w-2 h-2 rounded-full bg-[#22C55E]" />
+    <span className="text-[10px] font-medium text-[#22C55E]">Active</span>
+  </div>
+
 </div>
+
+    <div className="flex items-center gap-2 lg:gap-4">
+     <button className="w-9 h-9 rounded-lg bg-[#EEF4FF] flex items-center justify-center lg:w-10 lg:h-10">
+        <img className="h-7" src="/src/assets/icon/icon_edit.png"alt=""/>
+      </button>
+
+      <button className="w-9 h-9 rounded-lg bg-[#FEEAEA] flex items-center justify-center lg:w-10 lg:h-10">
+        <img className="h-6" src="/src/assets/icon/icon_trash.png" alt=""/>
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
   );
 };
 
