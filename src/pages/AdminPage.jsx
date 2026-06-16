@@ -1,6 +1,5 @@
 
 import ManageProducts from "./ManageProducts"
-import HomeIcon from "../components/HomeIcon"
 
 const AdminPage = () => {
     return(
@@ -47,7 +46,6 @@ const AdminPage = () => {
 
     <ul>
       <li>
-          <HomeIcon className={"h-6 w-6 text-[#0344DC]"}></HomeIcon>
           <h3></h3>
       </li>
 
