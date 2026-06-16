@@ -1,5 +1,6 @@
 
 import ManageProducts from "./ManageProducts"
+import HomeIcon from "../components/HomeIcon"
 
 const AdminPage = () => {
     return(
@@ -42,19 +43,16 @@ const AdminPage = () => {
     lg:border-t-0
   "
 >
-    <h2 className="hidden lg:block text-[#0344DC] text-center mt-8 text-4xl ">Zoka</h2>
+    <h2 className="hidden lg:block text-[#0344DC] text-center mt-8 text-4xl">Zoka</h2>
 
     <ul>
       <li>
-        <div>
-          <img src="" alt="" />
+          <HomeIcon className={"h-6 w-6 text-[#0344DC]"}></HomeIcon>
           <h3></h3>
-        </div>
       </li>
 
       <li>
         <div>
-          <img src="" alt="" />
           <h3></h3>
         </div>
       </li>

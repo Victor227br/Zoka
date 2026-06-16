@@ -31,13 +31,14 @@ const ManageProducts = () =>{
     >
     Add Product
     </button>
+    
 </section>
 
 <section className="grid grid-cols-2 gap-4 m-4 lg:grid-cols-4">
 
   <div className="bg-white rounded-2xl shadow-md p-4 flex items-center gap-4 flex-col justify-center lg:flex-row justify-around">
     <div className="flex items-center justify-center w-16 h-16 lg:w-20 lg:h-20 bg-[#E1E9F9] rounded-full shrink-0">
-      <img src="" alt="" />
+      <img src="/src/assets/icon/icon_box.png" alt="" />
     </div>
 
     <div className="flex flex-col items-center">
@@ -49,7 +50,7 @@ const ManageProducts = () =>{
 
   <div className="bg-white rounded-2xl shadow-md p-4 flex items-center gap-4 flex-col justify-center lg:flex-row justify-around">
     <div className="flex items-center justify-center w-16 h-16 lg:w-20 lg:h-20 bg-[#E1E9F9] rounded-full shrink-0">
-      <h2 className="text-[#0344DC] text-[]">$</h2>
+      <h2 className="text-[#0344DC] text-[24px]">$</h2>
     </div>
 
     <div className="flex flex-col items-center">
@@ -62,7 +63,7 @@ const ManageProducts = () =>{
 
   <div className="bg-white rounded-2xl shadow-md p-4 flex items-center gap-4 flex-col justify-center lg:flex-row justify-around">
     <div className="flex items-center justify-center w-16 h-16 lg:w-20 lg:h-20 bg-[#E1E9F9] rounded-full shrink-0">
-      <img src="" alt="" />
+      <img src="/src/assets/icon/icon_discount.png" alt="" />
     </div>
 
     <div className="flex flex-col items-center">
@@ -74,7 +75,7 @@ const ManageProducts = () =>{
 
   <div className="bg-white rounded-2xl shadow-md p-4 flex items-center gap-4 flex-col justify-center lg:flex-row justify-around">
     <div className="flex items-center justify-center w-16 h-16 lg:w-20 lg:h-20 bg-[#E1E9F9] rounded-full shrink-0">
-      <img src="" alt="" />
+      <img src="/src/assets/icon/icon_block.png" alt="" />
     </div>
 
     <div className="flex flex-col items-center">
@@ -156,24 +157,6 @@ const ManageProducts = () =>{
 
 <section>
 
-<div
-  className="
-  grid
-  grid-cols-[1.5fr_1.5fr_1fr]
-  items-center
-  px-4
-  py-3
-  bg-[#0344DC]
-  text-white
-  text-xs
-  font-semibold
-  rounded-t-xl
-  ">
-    
-  <span>Product</span>
-  <span className="text-center">Status</span>
-  <span className="text-center">Actions</span>
-</div>
       <AdminProductItem/>
       <AdminProductItem/>
       <AdminProductItem/>
