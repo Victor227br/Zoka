@@ -55,12 +55,12 @@ const AdminPage = () => {
         </div>
       </li>
 
-      <li>
+      {/* <li>
         <div>
           <img src="" alt="" />
           <h3></h3>
         </div>
-      </li>
+      </li> */}
 
     </ul>
 
