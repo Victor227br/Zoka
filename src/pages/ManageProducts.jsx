@@ -1,7 +1,12 @@
-
+import { useState } from "react"
 import AdminProductItem from "../components/AdminProductItem"
+import FormProduct from "../components/FormProduct"
+
 
 const ManageProducts = () =>{
+
+  const [formOpen, setFormOpen] = useState(false)
+
     return(
       <>
         <section className="sm:flex flex-col justify-center lg:flex-row justify-between lg: m-4">
@@ -14,8 +19,10 @@ const ManageProducts = () =>{
         Manage your store's products
       </p>
     </div>
-
-    <button className="
+ 
+    <button
+    onClick={() => setFormOpen(true)} 
+    className="
     bg-[#0344DC] 
     flex 
     items-center
@@ -31,7 +38,34 @@ const ManageProducts = () =>{
     >
     Add Product
     </button>
-    
+
+    {
+      formOpen &&(
+         <div
+      className="
+        fixed
+        inset-0
+        z-50
+        bg-black/40
+        flex
+        justify-center
+        p-4
+        overflow-y-auto
+      ">
+
+      <div
+        className="
+          w-full
+          max-w-4xl
+          my-8
+        ">
+          
+        <FormProduct />
+      </div>
+    </div>
+      )
+    }
+
 </section>
 
 <section className="grid grid-cols-2 gap-4 m-4 lg:grid-cols-4">
@@ -156,17 +190,13 @@ const ManageProducts = () =>{
 </section>
 
 <section>
-
       <AdminProductItem/>
       <AdminProductItem/>
       <AdminProductItem/>
-
   </section>
 
-
-
-    </>
-    )
+  </>
+  )
 }
 
 export default ManageProducts
