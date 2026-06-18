@@ -3,26 +3,29 @@ import Product from "../pages/Product"
 
 const FormProduct = () => {
 
-    const [dataProduct, setDataProduct] = useState({
-        Product: " ",
+    const [formData, setFormData] = useState({
+        Product: "",
         Price:"",
         Stock: "",
         Type: "",
         Status: "",
         Description: ""
     })
-    
 
-    const array = []
+    const [products, setProducts] = useState([])     
 
     const handleSubmit = (e) =>{
-        array.push(dataProduct)
-
-        e.preventDefault();
+        e.preventDefault()
         console.log ("Apertou!")
-        console.log(array)
-    }   
-    
+        setProducts((products) =>{
+            return[...products, formData]
+        })
+    }  
+
+    const json = JSON.stringify(products)
+        console.log(json + "json")
+
+    // console.log(products)
     
 return(
     <section
@@ -48,9 +51,9 @@ return(
 
       <input
         type="text"
-        value={dataProduct.Product}
-        onChange={(e) => setDataProduct({...dataProduct, Product: e.target.value})}
-        // placeholder="Ex: Cappuccino"
+        name="nameProduct"
+        value={formData.Product}
+        onChange={(e) => setFormData({...formData, Product: e.target.value})}
         className="
           w-full
           p-3
@@ -66,8 +69,8 @@ return(
       <label className="block text-sm font-medium text-slate-700 mb-2">Price</label>
       <input
         type="number"
-        // value={}
-        // onChange={}
+         value={formData.Price}
+         onChange={(e) => setFormData({...formData, Price: e.target.value})}
         placeholder="$0.00"
         className="
           w-full
@@ -153,8 +156,8 @@ return(
       <textarea
         rows="4"
         placeholder="Write a short description..."
-        // value={}
-        // onChange={}
+        value={formData.Description}
+        onChange={(e) => setFormData({...formData, Description: e.target.valuez})}
         className="
           w-full
           p-3
