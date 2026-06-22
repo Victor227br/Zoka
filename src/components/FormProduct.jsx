@@ -1,42 +1,20 @@
-import { useState } from "react"
 import Product from "../pages/Product"
+import UseProductForm from "./UseProductForm"
 
 const FormProduct = () => {
-
-    const [formData, setFormData] = useState({
-        Product: "",
-        Price:"",
-        Stock: "",
-        Type: "",
-        Status: "",
-        Description: ""
-    })
-
-    const [products, setProducts] = useState([])     
-
-    const handleSubmit = (e) =>{
-        e.preventDefault()
-        console.log ("Apertou!")
-        setProducts((products) =>{
-            return[...products, formData]
-        })
-    }  
-
-    const json = JSON.stringify(products)
-        console.log(json + "json")
-
-    // console.log(products)
-    
-return(
+  
+  const {formData, setFormData, error, setError ,handleSubmit} = UseProductForm()
+  
+  return(
     <section
-  className="
-    bg-white
-    rounded-2xl
-    shadow-sm
-    border
-    border-slate-100
-    p-5
-    m-4">
+      className="
+      bg-white
+      rounded-2xl
+      shadow-sm
+      border
+      border-slate-100
+      p-5
+      m-4">
     
   <div className="mb-6">
     <h2 className="text-2xl font-bold text-[#1D3557]">Add Product</h2>
@@ -69,8 +47,9 @@ return(
       <label className="block text-sm font-medium text-slate-700 mb-2">Price</label>
       <input
         type="number"
-         value={formData.Price}
-         onChange={(e) => setFormData({...formData, Price: e.target.value})}
+        min="0" 
+        value={formData.Price}
+        onChange={(e) => setFormData({...formData, Price: e.target.value})}
         placeholder="$0.00"
         className="
           w-full
@@ -87,6 +66,9 @@ return(
 
       <label className="block text-sm font-medium text-slate-700 mb-2">Units in Stock</label>
       <input
+        min="0" 
+        value={formData.Stock}
+        onChange={(e) => setFormData({...formData, Stock: e.target.value})}
         type="number"
         placeholder="0"
         className="
@@ -98,12 +80,15 @@ return(
           outline-none
           focus:border-[#0344DC]
         "/>
+
     </div>
 
     <div>
 
       <label className="block text-sm font-medium text-slate-700 mb-2">Product Type</label>
       <select
+      value={formData.Type}
+      onChange={(e) => setFormData({...formData, Type: e.target.value})}
         className="
           w-full
           p-3
@@ -115,16 +100,17 @@ return(
           focus:border-[#0344DC]
         ">
 
-        <option>Hot Drink</option>
-        <option>Cold Drink</option>
-        <option>Special Drink</option>
+        <option value={"Hot Drink"}>Hot Drink</option>
+        <option value={"Cold Drink"}>Cold Drink</option>
+        <option value={"Special Drink"}>Special Drink</option>
       </select>
     </div>
 
     <div>
-
       <label className="block text-sm font-medium text-slate-700 mb-2">Status</label>
       <select
+        value={formData.Status}
+        onChange={(e) => setFormData({...formData, Status: e.target.value})}
         className="
           w-full
           p-3
@@ -142,8 +128,7 @@ return(
 
     <div>
 
-      <label className="block text-sm font-medium text-slate-700 mb-2">Product Image</label>
-      
+      <label className="block text-sm font-medium text-slate-700 mb-2">Product Image</label> 
       <input
         type="file"
         className=" w-full p-3 rounded-xl border border-dashed border-slate-300 text-sm"/>
@@ -157,7 +142,7 @@ return(
         rows="4"
         placeholder="Write a short description..."
         value={formData.Description}
-        onChange={(e) => setFormData({...formData, Description: e.target.valuez})}
+        onChange={(e) => setFormData({...formData, Description: e.target.value})}
         className="
           w-full
           p-3
@@ -166,25 +151,11 @@ return(
           border-slate-200
           resize-none
           outline-none
-          focus:border-[#0344DC]
-        "/>
+          focus:border-[#0344DC]"/>
 
     </div>
 
     <div className="flex gap-3 mt-2">
-
-      {/* <button
-        type="button"
-        className="
-          flex-1
-          p-3
-          rounded-xl
-          border
-          border-slate-200
-          text-slate-600
-          font-medium">
-        Cancel
-      </button> */}
 
       <button
         type="submit"
@@ -198,6 +169,7 @@ return(
         ">
         Save Product
       </button>
+
     </div>
   </form>
 </section>
