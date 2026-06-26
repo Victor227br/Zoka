@@ -1,5 +1,5 @@
 
-import ManageProducts from "./ManageProducts"
+import ManageProducts from "../components/ManageProducts"
 
 const AdminPage = () => {
     return(
