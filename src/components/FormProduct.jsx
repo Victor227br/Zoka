@@ -1,10 +1,10 @@
 import Product from "../pages/Product"
 import UseProductForm from "./UseProductForm"
 
-const FormProduct = () => {
+const FormProduct = ({addProduct}) => {
   
-  const {formData, setFormData, error, setError ,handleSubmit} = UseProductForm()
-  
+  const {formData, setFormData ,handleSubmit} = UseProductForm(addProduct)
+
   return(
     <section
       className="
@@ -58,12 +58,10 @@ const FormProduct = () => {
           border
           border-slate-200
           outline-none
-          focus:border-[#0344DC]
-        "/>
+          focus:border-[#0344DC]"/>
     </div>
 
     <div>
-
       <label className="block text-sm font-medium text-slate-700 mb-2">Units in Stock</label>
       <input
         min="0" 
@@ -78,13 +76,10 @@ const FormProduct = () => {
           border
           border-slate-200
           outline-none
-          focus:border-[#0344DC]
-        "/>
-
+          focus:border-[#0344DC]"/>
     </div>
 
     <div>
-
       <label className="block text-sm font-medium text-slate-700 mb-2">Product Type</label>
       <select
       value={formData.Type}
@@ -152,11 +147,9 @@ const FormProduct = () => {
           resize-none
           outline-none
           focus:border-[#0344DC]"/>
-
     </div>
 
     <div className="flex gap-3 mt-2">
-
       <button
         type="submit"
         className="
@@ -165,8 +158,7 @@ const FormProduct = () => {
           rounded-xl
           bg-[#0344DC]
           text-white
-          font-medium
-        ">
+          font-medium">
         Save Product
       </button>
 
