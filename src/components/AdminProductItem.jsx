@@ -18,7 +18,7 @@ const AdminProductItem = ({product}) => {
 
   <div className="flex flex-col ">
   <div className="flex flex-col items-center">
-    <p className="text-[12px] text-slate-500"></p>
+    <p className="text-[12px] text-slate-500">Stock</p>
     <h3 className="font-bold text-slate-800">{Stock}</h3>
   </div>
 
