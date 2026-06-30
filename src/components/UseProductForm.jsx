@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 const UseProductForm = (addProduct) => {
 
   const [formData, setFormData] = useState({
+    Id: new Date().getTime().toString(),
     Product: "",
     Price: "",
     Stock: "",
