@@ -4,7 +4,6 @@ import FormProduct from "./FormProduct"
 import Product from "../pages/Product"
 import { getItem, setItem } from "../services/ProductService";
 
-
 const ManageProducts = () =>{
 
   const [products, setProducts] = useState(() => {
@@ -17,6 +16,7 @@ const ManageProducts = () =>{
 
   const addProduct = (product) => {
     setProducts([...products, product])
+    setFormOpen(false)
   } 
   
   useEffect(() =>{
@@ -66,8 +66,7 @@ const ManageProducts = () =>{
         flex
         justify-center
         p-4
-        overflow-y-auto
-">
+        overflow-y-auto">
 
       <div
         className="
@@ -199,9 +198,9 @@ const ManageProducts = () =>{
 <section>
      {
       products.map((product) =>{
-       const {Product, Price, Stock, Type, Status, Description} = product;
+       const {Id, Product, Price, Stock, Type, Status, Description} = product;
        return(
-        <AdminProductItem product={product}></AdminProductItem>
+        <AdminProductItem key={Id} product={product}></AdminProductItem>
        )
       })
      }
