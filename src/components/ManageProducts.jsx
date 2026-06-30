@@ -2,13 +2,16 @@ import { useEffect, useState } from "react"
 import AdminProductItem from "./AdminProductItem"
 import FormProduct from "./FormProduct"
 import Product from "../pages/Product"
+import { getItem, setItem } from "../services/ProductService";
 
 
 const ManageProducts = () =>{
 
   const [products, setProducts] = useState(() => {
-  return JSON.parse(localStorage.getItem("productsData")) || [];
+  return getItem()
   });
+
+  console.log(products)
 
   const [formOpen, setFormOpen] = useState(false)
 
@@ -17,7 +20,7 @@ const ManageProducts = () =>{
   } 
   
   useEffect(() =>{
-    localStorage.setItem('productsData', JSON.stringify(products))
+    setItem(products)
   },[products])
 
   return(
@@ -71,7 +74,6 @@ const ManageProducts = () =>{
           w-full
           max-w-4xl
           my-8">
-
         <FormProduct  addProduct={addProduct} />
       </div>
     </div>
@@ -146,11 +148,9 @@ const ManageProducts = () =>{
       outline-none
       focus:border-[#0344DC]
       focus:ring-1
-      focus:ring-[#0344DC]
-    "/>
+      focus:ring-[#0344DC]"/>
 
   <div className="grid grid-cols-2 gap-3">
-
     <select
       className="
         h-12
@@ -159,8 +159,7 @@ const ManageProducts = () =>{
         border
         border-slate-200
         bg-white
-        text-slate-700
-      ">
+        text-slate-700">
       <option>All Categories</option>
     </select>
 
@@ -176,7 +175,6 @@ const ManageProducts = () =>{
       ">
       <option>Status: All</option>
     </select>
-
   </div>
 
   <button
@@ -199,9 +197,14 @@ const ManageProducts = () =>{
 </section>
 
 <section>
-      <AdminProductItem/>
-      <AdminProductItem/>
-      <AdminProductItem/>
+     {
+      products.map((product) =>{
+       const {Product, Price, Stock, Type, Status, Description} = product;
+       return(
+        <AdminProductItem product={product}></AdminProductItem>
+       )
+      })
+     }
   </section>
 
   </>
