@@ -10,23 +10,29 @@ const ManageProducts = () =>{
   return getItem()
   });
 
-  console.log(products)
-
   const [formOpen, setFormOpen] = useState(false)
+  const [isEditingProduct, setIsEditingProduct] = useState(null)
 
   const addProduct = (product) => {
     setProducts([...products, product])
     setFormOpen(false)
   } 
-  
+
   useEffect(() =>{
     setItem(products)
   },[products])
+  
+
+  const deleteProduct = (id) => {
+    console.log(id)
+    const productDelete = products.filter(product => product.id !== id) 
+      setProducts(productDelete)
+  }
 
   return(
       <>
-        <section className="sm:flex flex-col justify-center lg:flex-row justify-between lg: m-4">
-    <div >
+  <section className="sm:flex flex-col justify-center lg:flex-row justify-between lg: m-4">
+    <div>
       <h1 className="text-3xl mb-2 font-bold sm: text-center lg:text-left">
         Products
       </h1>
@@ -50,13 +56,12 @@ const ManageProducts = () =>{
     rounded-xl 
     mt-5
     mb-2
-    lg:w-[18%]"
-    >
+    lg:w-[18%]">
     Add Product
     </button>
 
     {
-      formOpen &&(
+    formOpen &&(
       <div
       className="
         fixed
@@ -73,7 +78,7 @@ const ManageProducts = () =>{
           w-full
           max-w-4xl
           my-8">
-        <FormProduct  addProduct={addProduct} />
+        <FormProduct editProduct={editProduct} isEditingProduct={isEditingProduct}  addProduct={addProduct} />
       </div>
     </div>
       )
@@ -189,8 +194,7 @@ const ManageProducts = () =>{
       bg-white
       text-slate-700
       hover:bg-slate-50
-      transition
-    ">
+      transition">
     Clear filter
   </button>
 </section>
@@ -199,13 +203,12 @@ const ManageProducts = () =>{
      {
       products.map((product) =>{
        const {Id, Product, Price, Stock, Type, Status, Description} = product;
-       return(
-        <AdminProductItem key={Id} product={product}></AdminProductItem>
+        return(
+        <AdminProductItem key={Id} deleteProduct={deleteProduct} product={product}></AdminProductItem> 
        )
       })
      }
   </section>
-
   </>
   )
 }
