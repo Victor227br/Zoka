@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 const UseProductForm = (addProduct) => {
 
   const [formData, setFormData] = useState({
-    Id: new Date().getTime().toString(),
+    id: new Date().getTime().toString(),
     Product: "",
     Price: "",
     Stock: "",
@@ -13,12 +13,11 @@ const UseProductForm = (addProduct) => {
     })
 
     const handleSubmit = (event) => {
-        event.preventDefault() 
-        if (formData.Product.trim() === "" || formData.Price.trim() === "" || formData.Description.trim() === "" || formData.Stock.trim() === ""){
-            window.alert("Preencha direito")
-        } else {
-            addProduct(formData)
-            console.log("Enviado")
+     event.preventDefault() 
+      if (formData.Product.trim() === "" || formData.Price.trim() === "" || formData.Description.trim() === "" || formData.Stock.trim() === ""){
+        window.alert("Preencha direito")
+    } else {
+        addProduct(formData)
         }
     }    
 
