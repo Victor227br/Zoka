@@ -2,15 +2,19 @@ import { useState, useEffect } from "react";
 
 const UseProductForm = (addProduct) => {
 
+    //minusculo
+
   const [formData, setFormData] = useState({
     id: new Date().getTime().toString(),
-    Product: "",
-    Price: "",
-    Stock: "",
-    Type: "Hot Drink",
-    Status: "Active ",
-    Description: ""
+    name: "",
+    price: "",
+    stock: "",
+    type: "Hot Drink",
+    status: "Active ",
+    description: ""
     })
+
+    //componente form com todos os inputs com a logica
 
     const handleSubmit = (event) => {
      event.preventDefault() 
