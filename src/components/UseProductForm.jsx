@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 
 const UseProductForm = (addProduct) => {
 
-    //minusculo
-
   const [formData, setFormData] = useState({
     id: new Date().getTime().toString(),
     name: "",
