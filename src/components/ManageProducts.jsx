@@ -11,20 +11,25 @@ const ManageProducts = () =>{
   });
 
   const [formOpen, setFormOpen] = useState(false)
-  const [isEditingProduct, setIsEditingProduct] = useState(null)
+  const [editandoProduto, setEditandoProduto] = useState()
 
   const addProduct = (product) => {
     setProducts([...products, product])
     setFormOpen(false)
   } 
 
+  //importar a funcao
+
   useEffect(() =>{
     setItem(products)
   },[products])
   
+  const editProduct = (id, productData) => {
+    const productEdit = products.find(product => product.id === id)
+      console.log(productEdit)
+  }
 
   const deleteProduct = (id) => {
-    console.log(id)
     const productDelete = products.filter(product => product.id !== id) 
       setProducts(productDelete)
   }
@@ -33,13 +38,8 @@ const ManageProducts = () =>{
       <>
   <section className="sm:flex flex-col justify-center lg:flex-row justify-between lg: m-4">
     <div>
-      <h1 className="text-3xl mb-2 font-bold sm: text-center lg:text-left">
-        Products
-      </h1>
-
-      <p className="text-slate-500 sm: text-xl sm: text-center lg: text-left lg: text-2xl">
-        Manage your store's products
-      </p>
+      <h1 className="text-3xl mb-2 font-bold sm: text-center lg:text-left">Products</h1>
+      <p className="text-slate-500 sm: text-xl sm: text-center lg: text-left lg: text-2xl">Manage your store's products</p>
     </div>
  
     <button
@@ -78,7 +78,7 @@ const ManageProducts = () =>{
           w-full
           max-w-4xl
           my-8">
-        <FormProduct editProduct={editProduct} isEditingProduct={isEditingProduct}  addProduct={addProduct} />
+        <FormProduct editProduct={editProduct} setFormOpen={setFormOpen} addProduct={addProduct} />
       </div>
     </div>
       )
@@ -88,11 +88,34 @@ const ManageProducts = () =>{
 
 <section className="grid grid-cols-2 gap-4 m-4 lg:grid-cols-4">
 
-  <div className="bg-white rounded-2xl shadow-md p-4 flex items-center gap-4 flex-col justify-center lg:flex-row justify-around">
-    <div className="flex items-center justify-center w-16 h-16 lg:w-20 lg:h-20 bg-[#E1E9F9] rounded-full shrink-0">
+  <div 
+  className="
+  bg-white 
+  rounded-2xl 
+  shadow-md 
+  p-4 
+  flex 
+  items-center 
+  gap-4 
+  flex-col 
+  justify-center 
+  lg:flex-row 
+  justify-around">
+
+    <div 
+    className="
+    flex 
+    items-center 
+    justify-center 
+    w-16 
+    h-16 
+    lg:w-20 
+    lg:h-20 
+    bg-[#E1E9F9] 
+    rounded-full shrink-0">
+      
       <img src="/src/assets/icon/icon_box.png" alt="" />
     </div>
-
     <div className="flex flex-col items-center">
       <p className="text-gray-500 text-sm">Total Products</p>
       <h3 className="text-2xl font-bold text-slate-800">21</h3>
@@ -100,8 +123,32 @@ const ManageProducts = () =>{
     </div>
   </div>
 
-  <div className="bg-white rounded-2xl shadow-md p-4 flex items-center gap-4 flex-col justify-center lg:flex-row justify-around">
-    <div className="flex items-center justify-center w-16 h-16 lg:w-20 lg:h-20 bg-[#E1E9F9] rounded-full shrink-0">
+  <div 
+  className="
+  bg-white 
+  rounded-2xl 
+  shadow-md 
+  p-4 
+  flex 
+  items-center 
+  gap-4 
+  flex-col 
+  justify-center 
+  lg:flex-row 
+  justify-around">
+
+    <div 
+    className="
+      flex
+      items-center
+      justify-center 
+      w-16 
+      h-16 
+      lg:w-20 
+      lg:h-20 
+      bg-[#E1E9F9] 
+      rounded-full 
+      shrink-0">
       <h2 className="text-[#0344DC] text-[24px]">$</h2>
     </div>
 
@@ -112,8 +159,33 @@ const ManageProducts = () =>{
     </div>
   </div>
 
-  <div className="bg-white rounded-2xl shadow-md p-4 flex items-center gap-4 flex-col justify-center lg:flex-row justify-around">
-    <div className="flex items-center justify-center w-16 h-16 lg:w-20 lg:h-20 bg-[#E1E9F9] rounded-full shrink-0">
+  <div 
+  className="
+  bg-white 
+  rounded-2xl 
+  shadow-md 
+  p-4 
+  flex 
+  items-center 
+  gap-4 
+  flex-col 
+  justify-center 
+  lg:flex-row 
+  justify-around">
+
+    <div
+    className="
+    flex 
+    items-center 
+    justify-center 
+    w-16 
+    h-16 
+    lg:w-20 
+    lg:h-20 
+    bg-[#E1E9F9] 
+    rounded-full 
+    shrink-0">
+
       <img src="/src/assets/icon/icon_discount.png" alt="" />
     </div>
 
@@ -124,8 +196,33 @@ const ManageProducts = () =>{
     </div>
   </div>
 
-  <div className="bg-white rounded-2xl shadow-md p-4 flex items-center gap-4 flex-col justify-center lg:flex-row justify-around">
-    <div className="flex items-center justify-center w-16 h-16 lg:w-20 lg:h-20 bg-[#E1E9F9] rounded-full shrink-0">
+  <div 
+  className="
+  bg-white 
+  rounded-2xl 
+  shadow-md 
+  p-4 
+  flex 
+  items-center 
+  gap-4 
+  flex-col 
+  justify-center 
+  lg:flex-row 
+  justify-around">
+
+    <div 
+    className="
+    flex 
+    items-center 
+    justify-center 
+    w-16 
+    h-16 
+    lg:w-20 
+    lg:h-20 
+    bg-[#E1E9F9] 
+    rounded-full 
+    shrink-0">
+
       <img src="/src/assets/icon/icon_block.png" alt="" />
     </div>
 
@@ -202,9 +299,9 @@ const ManageProducts = () =>{
 <section>
      {
       products.map((product) =>{
-       const {Id, Product, Price, Stock, Type, Status, Description} = product;
+       const {id, Product, Price, Stock, Type, Status, Description} = product;
         return(
-        <AdminProductItem key={Id} deleteProduct={deleteProduct} product={product}></AdminProductItem> 
+        <AdminProductItem key={id} editProduct={editProduct} deleteProduct={deleteProduct} product={product}></AdminProductItem> 
        )
       })
      }
