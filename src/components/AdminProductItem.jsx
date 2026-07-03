@@ -1,6 +1,6 @@
 const AdminProductItem = ({product, deleteProduct, editProduct}) => {
-
-  const {id, name, price, stock, type, status, description} = product;
+  
+const {id, name, price, stock, type, status, description} = product;
 
 return (
   <div className=" bg-white rounded-xl shadow-sm p-4 border border-slate-100">
@@ -29,7 +29,16 @@ return (
     <div className="flex items-center gap-2 lg:gap-4">
      <button
      onClick={() => editProduct(id)} 
-      className="w-9 h-9 rounded-lg bg-[#EEF4FF] flex items-center justify-center lg:w-10 lg:h-10">
+      className="
+      w-9 
+      h-9 
+      rounded-lg 
+      bg-[#EEF4FF] 
+      flex 
+      items-center 
+      justify-center 
+      lg:w-10 
+      lg:h-10">
         <img className="h-7" src="/src/assets/icon/icon_edit.png"alt=""/>
       </button>
 
