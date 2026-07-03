@@ -11,14 +11,11 @@ const ManageProducts = () =>{
   });
 
   const [formOpen, setFormOpen] = useState(false)
-  const [editandoProduto, setEditandoProduto] = useState()
 
   const addProduct = (product) => {
     setProducts([...products, product])
     setFormOpen(false)
   } 
-
-  //importar a funcao
 
   useEffect(() =>{
     setItem(products)
@@ -272,8 +269,7 @@ const ManageProducts = () =>{
         border
         border-slate-200
         bg-white
-        text-slate-700
-      ">
+        text-slate-700">
       <option>Status: All</option>
     </select>
   </div>
@@ -299,7 +295,7 @@ const ManageProducts = () =>{
 <section>
      {
       products.map((product) =>{
-       const {id, Product, Price, Stock, Type, Status, Description} = product;
+       const {id, name, price, stock, type, status, description} = product;
         return(
         <AdminProductItem key={id} editProduct={editProduct} deleteProduct={deleteProduct} product={product}></AdminProductItem> 
        )
