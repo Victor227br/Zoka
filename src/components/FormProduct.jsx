@@ -1,9 +1,24 @@
-import Product from "../pages/Product"
-import UseProductForm from "./UseProductForm"
+import { useState } from "react"
 
 const FormProduct = ({addProduct, editProduct}) => {
-  
-  const {formData, setFormData ,handleSubmit} = UseProductForm(addProduct, editProduct)
+  const [formData, setFormData] = useState({
+    id: new Date().getTime().toString(),
+    name: "",
+    price: "",
+    stock: "",
+    type: "Hot Drink",
+    status: "Active ",
+    description: ""
+  })
+
+  const handleSubmit = (event) => {
+    event.preventDefault() 
+    if (!formData.name.trim() || !formData.price.trim() || !formData.description.trim() || !formData.stock.trim()){
+      window.alert("Preencha direito")
+    } else {
+      addProduct(formData)
+      }
+    }  
 
   return(
     <section
