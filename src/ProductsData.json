@@ -1,0 +1,112 @@
+    
+[
+  {
+    "id": 431,
+    "name": "Espresso",
+    "price": 8.5,
+    "stock": 45,
+    "type": "Hot Drink",
+    "status": "Active",
+    "description": "Traditional Italian espresso with an intense flavor and rich crema.",
+    "img": ""
+  },
+
+  {
+    "id": 243,
+    "name": "Cappuccino",
+    "price": 14.9,
+    "stock": 30,
+    "type": "Hot Drink",
+    "status": "Active",
+    "description": "Creamy coffee with steamed milk and a layer of milk foam.",
+    "img": ""
+  },
+
+  {
+    "id": 354,
+    "name": "Latte",
+    "price": 15.9,
+    "stock": 28,
+    "type": "Hot Drink",
+    "status": "Active",
+    "description": "Smooth espresso mixed with plenty of steamed milk.",
+    "img": ""
+  },
+
+  {
+    "id": 475,
+    "name": "Mocha",
+    "price": 18.9,
+    "stock": 22,
+    "type": "Hot Drink",
+    "status": "Active",
+    "description": "Espresso with chocolate, steamed milk, and whipped cream.",
+    "img": ""
+  },
+
+  {
+    "id": 587,
+    "name": "Iced Coffee",
+    "price": 16.5,
+    "stock": 20,
+    "type": "Cold Drink",
+    "status": "Active",
+    "description": "Refreshing cold coffee served over ice.",
+    "img": ""
+  },
+
+  {
+    "id": 632,
+    "name": "Caramel Frappé",
+    "price": 21.9,
+    "stock": 15,
+    "type": "Cold Drink",
+    "status": "Active",
+    "description": "Blended coffee with caramel syrup and whipped cream.",
+    "img": ""
+  },
+
+  {
+    "id": 333,
+    "name": "Vanilla Cold Brew",
+    "price": 19.9,
+    "stock": 18,
+    "type": "Cold Drink",
+    "status": "Active",
+    "description": "Slow-brewed coffee with a smooth vanilla flavor.",
+    "img": ""
+  },
+
+  {
+    "id": 834,
+    "name": "Pumpkin Spice Latte",
+    "price": 22.9,
+    "stock": 12,
+    "type": "Special Drink",
+    "status": "Inactive",
+    "description": "Seasonal latte with pumpkin spices and creamy milk.",
+    "img": ""
+  },
+
+  {
+    "id": 942,
+    "name": "Hazelnut Latte",
+    "price": 20.5,
+    "stock": 17,
+    "type": "Special Drink",
+    "status": "Active",
+    "description": "Creamy latte flavored with roasted hazelnut syrup.",
+    "img": ""
+  },
+
+  {
+    "id": 101,
+    "name": "Affogato",
+    "price": 17.9,
+    "stock": 10,
+    "type": "Special Drink",
+    "status": "Active",
+    "description": "Vanilla ice cream topped with a shot of hot espresso.",
+    "img": ""
+  }
+]
