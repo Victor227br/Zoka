@@ -1,24 +1,36 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
-const FormProduct = ({addProduct, editProduct}) => {
+const FormProduct = ({addProduct, editingProduct, editProduct}) => {
   const [formData, setFormData] = useState({
     id: new Date().getTime().toString(),
-    name: "",
-    price: "",
-    stock: "",
+    name:"",
+    price:"",
+    stock:"",
     type: "Hot Drink",
     status: "Active ",
     description: ""
   })
 
+  useEffect(() => {
+    if (editingProduct) {
+      setFormData(editingProduct);
+    }
+  }, [editingProduct]);
+
   const handleSubmit = (event) => {
     event.preventDefault() 
     if (!formData.name.trim() || !formData.price.trim() || !formData.description.trim() || !formData.stock.trim()){
-      window.alert("Preencha direito")
-    } else {
-      addProduct(formData)
+      window.alert("Fill in all the input fields")
+    }  else{
+      if (editingProduct){
+        editProduct(formData);
+        console.log("editoy")
+      } 
+      else {
+        addProduct(formData)
       }
-    }  
+    }
+  }
 
   return(
     <section
@@ -152,7 +164,14 @@ const FormProduct = ({addProduct, editProduct}) => {
       <label className="block text-sm font-medium text-slate-700 mb-2">Product Image</label> 
       <input
         type="file"
-        className=" w-full p-3 rounded-xl border border-dashed border-slate-300 text-sm"/>
+        className=" 
+        w-full 
+        p-3 
+        rounded-xl 
+        border 
+        border-dashed 
+        border-slate-300 
+        text-sm"/>
     </div>
 
     <div>
