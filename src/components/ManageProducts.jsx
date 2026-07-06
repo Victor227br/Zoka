@@ -11,20 +11,33 @@ const ManageProducts = () =>{
   });
 
   const [formOpen, setFormOpen] = useState(false)
+  const [editingProduct, setEditingProduct] = useState()
 
   const addProduct = (product) => {
     setProducts([...products, product])
     setFormOpen(false)
-  } 
-
+  }
+  
   useEffect(() =>{
     setItem(products)
   },[products])
-  
-  const editProduct = (id, productData) => {
-    const productEdit = products.find(product => product.id === id)
-      console.log(productEdit)
-  }
+
+  const getProductEdit = (id) => {
+    setFormOpen(true);
+    const productEdit = products.find(product => product.id === id);
+      setEditingProduct(productEdit);
+}
+
+  const editProduct = (productUpdate) => {
+    const UpdateProducts = products.map((product) => {
+      if(product.id === productUpdate.id){
+        return productUpdate
+      }
+        return product
+    })
+    setProducts(UpdateProducts);
+    setFormOpen(false);
+  } 
 
   const deleteProduct = (id) => {
     const productDelete = products.filter(product => product.id !== id) 
@@ -75,12 +88,11 @@ const ManageProducts = () =>{
           w-full
           max-w-4xl
           my-8">
-        <FormProduct editProduct={editProduct} setFormOpen={setFormOpen} addProduct={addProduct} />
+        <FormProduct editingProduct={editingProduct} editProduct={editProduct}  setFormOpen={setFormOpen} addProduct={addProduct} />
       </div>
     </div>
       )
     }
-
 </section>
 
 <section className="grid grid-cols-2 gap-4 m-4 lg:grid-cols-4">
@@ -297,7 +309,7 @@ const ManageProducts = () =>{
       products.map((product) =>{
        const {id, name, price, stock, type, status, description} = product;
         return(
-        <AdminProductItem key={id} editProduct={editProduct} deleteProduct={deleteProduct} product={product}></AdminProductItem> 
+        <AdminProductItem key={id} getProductEdit={getProductEdit} deleteProduct={deleteProduct} product={product}></AdminProductItem> 
        )
       })
      }
