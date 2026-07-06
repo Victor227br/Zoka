@@ -1,4 +1,4 @@
-const AdminProductItem = ({product, deleteProduct, editProduct}) => {
+const AdminProductItem = ({product, deleteProduct, getProductEdit}) => {
   
 const {id, name, price, stock, type, status, description} = product;
 
@@ -28,7 +28,7 @@ return (
 
     <div className="flex items-center gap-2 lg:gap-4">
      <button
-     onClick={() => editProduct(id)} 
+     onClick={() => getProductEdit(id)} 
       className="
       w-9 
       h-9 
