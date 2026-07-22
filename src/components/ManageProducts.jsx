@@ -1,48 +1,20 @@
-import { useEffect, useState } from "react"
 import AdminProductItem from "./AdminProductItem"
 import FormProduct from "./FormProduct"
 import Product from "../pages/Product"
 import { getItem, setItem } from "../services/ProductService";
+import { useProductsActions } from "../hooks/useProductActions";
 
-const ManageProducts = () =>{
-
-  const [products, setProducts] = useState(() => {
-  return getItem()
-  });
-
-  const [formOpen, setFormOpen] = useState(false)
-  const [editingProduct, setEditingProduct] = useState()
-
-  const addProduct = (product) => {
-    setProducts([...products, product])
-    setFormOpen(false)
-  }
-  
-  useEffect(() =>{
-    setItem(products)
-  },[products])
-
-  const getProductEdit = (id) => {
-    setFormOpen(true);
-    const productEdit = products.find(product => product.id === id);
-      setEditingProduct(productEdit);
-}
-
-  const editProduct = (productUpdate) => {
-    const UpdateProducts = products.map((product) => {
-      if(product.id === productUpdate.id){
-        return productUpdate
-      }
-        return product
-    })
-    setProducts(UpdateProducts);
-    setFormOpen(false);
-  } 
-
-  const deleteProduct = (id) => {
-    const productDelete = products.filter(product => product.id !== id) 
-      setProducts(productDelete)
-  }
+const ManageProducts = () => {
+  const { 
+    products, 
+    editingProduct, 
+    isFormOpen, 
+    removeProduct,
+    addProduct,
+    replaceProduct,
+    openEditForm, 
+    openForm, 
+    closeForm} = useProductsActions()
 
   return(
       <>
@@ -53,7 +25,7 @@ const ManageProducts = () =>{
     </div>
  
     <button
-    onClick={() => setFormOpen(true)} 
+    onClick={openForm} 
     className="
     bg-[#0344DC] 
     flex 
@@ -71,7 +43,7 @@ const ManageProducts = () =>{
     </button>
 
     {
-    formOpen &&(
+    isFormOpen &&(
       <div
       className="
         fixed
@@ -88,15 +60,19 @@ const ManageProducts = () =>{
           w-full
           max-w-4xl
           my-8">
-        <FormProduct editingProduct={editingProduct} editProduct={editProduct}  setFormOpen={setFormOpen} addProduct={addProduct} />
+        <FormProduct 
+          editingProduct={editingProduct} 
+          closeForm={closeForm} 
+          addProduct={addProduct} 
+          replaceProduct={replaceProduct}
+        />
       </div>
     </div>
-      )
-    }
+    )
+  }    
 </section>
 
 <section className="grid grid-cols-2 gap-4 m-4 lg:grid-cols-4">
-
   <div 
   className="
   bg-white 
@@ -122,8 +98,9 @@ const ManageProducts = () =>{
     lg:h-20 
     bg-[#E1E9F9] 
     rounded-full shrink-0">
-      
+
       <img src="/src/assets/icon/icon_box.png" alt="" />
+
     </div>
     <div className="flex flex-col items-center">
       <p className="text-gray-500 text-sm">Total Products</p>
@@ -194,7 +171,6 @@ const ManageProducts = () =>{
     bg-[#E1E9F9] 
     rounded-full 
     shrink-0">
-
       <img src="/src/assets/icon/icon_discount.png" alt="" />
     </div>
 
@@ -231,7 +207,6 @@ const ManageProducts = () =>{
     bg-[#E1E9F9] 
     rounded-full 
     shrink-0">
-
       <img src="/src/assets/icon/icon_block.png" alt="" />
     </div>
 
@@ -307,12 +282,19 @@ const ManageProducts = () =>{
 <section>
      {
       products.map((product) =>{
-       const {id, name, price, stock, type, status, description} = product;
+        const {id} = product;
         return(
-        <AdminProductItem key={id} getProductEdit={getProductEdit} deleteProduct={deleteProduct} product={product}></AdminProductItem> 
+        <AdminProductItem 
+          key={id}  
+          product={product}
+          removeProduct={removeProduct}
+          openEditForm={openEditForm}
+          >
+        </AdminProductItem> 
        )
       })
      }
+
   </section>
   </>
   )
