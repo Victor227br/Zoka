@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react"
+import {useState, useEffect} from "react"
+import { useProductsActions } from "../hooks/useProductActions"
 
-const FormProduct = ({addProduct, editingProduct, editProduct}) => {
-  const [formData, setFormData] = useState({
+const FormProduct = ({editingProduct, closeForm, addProduct, replaceProduct}) => {
+
+  const inicialValue = {
     id: new Date().getTime().toString(),
     name:"",
     price:"",
@@ -9,27 +11,24 @@ const FormProduct = ({addProduct, editingProduct, editProduct}) => {
     type: "Hot Drink",
     status: "Active ",
     description: ""
-  })
+  }
+
+  const [formData, setFormData] = useState(inicialValue)
 
   useEffect(() => {
-    if (editingProduct) {
-      setFormData(editingProduct);
-    }
-  }, [editingProduct]);
+  if (editingProduct) {
+    setFormData(editingProduct);
+  }
+}, [editingProduct]);
 
   const handleSubmit = (event) => {
     event.preventDefault() 
-    if (!formData.name.trim() || !formData.price.trim() || !formData.description.trim() || !formData.stock.trim()){
+    if (!formData.name.trim() || !formData.description.trim()){
       window.alert("Fill in all the input fields")
-    }  else{
-      if (editingProduct){
-        editProduct(formData);
-        console.log("editoy")
-      } 
-      else {
-        addProduct(formData)
-      }
+    } else{
+      return editingProduct ? replaceProduct(formData) : addProduct(formData)
     }
+    closeForm()
   }
 
   return(
@@ -49,6 +48,7 @@ const FormProduct = ({addProduct, editingProduct, editProduct}) => {
     <p className="text-slate-500 text-sm mt-1">Register a new product in your menu</p>
   </div>
   <button
+    onClick={closeForm}
     type="button"
     className="
       w-10
@@ -65,7 +65,7 @@ const FormProduct = ({addProduct, editingProduct, editProduct}) => {
     ✕
   </button>
 </div>
-    
+
   <form onSubmit={handleSubmit} className="flex flex-col gap-4">
     <div>
       <label className="block text-sm font-medium text-slate-700 mb-2">Product Name</label>
@@ -85,13 +85,14 @@ const FormProduct = ({addProduct, editingProduct, editProduct}) => {
     </div>
 
     <div>
-      <label className="block text-sm font-medium text-slate-700 mb-2">Price</label>
+      <label className="block text-sm font-medium text-slate-700 mb-2">Price $:</label>
       <input
         type="number"
-        min="0" 
+        min="0.00" 
+        max="999.99"
         value={formData.price}
         onChange={(e) => setFormData({...formData, price: e.target.value})}
-        placeholder="$0.00"
+        placeholder="0.00"
         className="
           w-full
           p-3
