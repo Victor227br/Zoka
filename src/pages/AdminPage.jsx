@@ -5,24 +5,23 @@ const AdminPage = () => {
     return(
   <section className="min-h-screen bg-slate-50">
 
-      <header
-        className="
-          fixed
-          top-0
-          left-0
-          right-0
-          h-16
-          bg-white
-          border-b
-          border-slate-200
-          flex
-          items-center
-          justify-between
-          px-8
-          z-50
-        ">
+    <header
+      className="
+        fixed
+        top-0
+        left-0
+        right-0
+        h-16
+        bg-white
+        border-b
+        border-slate-200
+        flex
+        items-center
+        justify-between
+        px-8
+        z-50">
 
-        <h2 className="text-[#0344DC] ml-2 text-2xl">Zoka</h2>
+      <h2 className="text-[#0344DC] ml-2 text-2xl">Zoka</h2>
 
         <nav className="flex items-center gap-5">
           <img className="h-6" src="./src/assets/icon/icon_notification.png" alt="" />
@@ -50,22 +49,19 @@ const AdminPage = () => {
           lg:w-[220px]
           lg:h-[calc(100vh-4rem)]
           lg:border-r
-          lg:border-t-0
-        ">
+          lg:border-t-0">
 
         <ul className="
             flex
             justify-around
             items-center
             h-full
-
             lg:flex-col
             lg:justify-start
             lg:items-start
             lg:gap-3
             lg:px-4
-            lg:py-6
-          ">
+            lg:py-6">
 
           <li className="w-full">
             <button 
@@ -79,8 +75,7 @@ const AdminPage = () => {
                 rounded-xl
                 hover:bg-[#EEF4FF]
                 hover:text-[#0344DC]
-                transition
-              ">
+                transition">
 
               <h3>Products</h3>
             </button>
@@ -98,8 +93,8 @@ const AdminPage = () => {
                 rounded-xl
                 hover:bg-[#EEF4FF]
                 hover:text-[#0344DC]
-                transition
-              ">
+                transition">
+
               <h3>Orders</h3>
             </button>
           </li>
@@ -116,8 +111,8 @@ const AdminPage = () => {
                 rounded-xl
                 hover:bg-[#EEF4FF]
                 hover:text-[#0344DC]
-                transition
-              ">
+                transition">
+                  
               <h3>Dashboard</h3>
             </button>
           </li>
