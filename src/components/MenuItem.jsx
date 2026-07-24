@@ -1,39 +1,90 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 const MenuItem = () => {
-    
-    return(
+return(
+ <Link to="/Product">
+<div
+  className="
+    flex
+    flex-col
+    sm:flex-row
+    bg-white
+    w-full
+    shadow-sm
+    hover:shadow-lg
+    transition-all
+    duration-300
+    rounded-md
+    cursor-pointer
+    p-4
+    gap-4
+    sm:items-center">
 
-    <Link to="/Product">
-        <div className="
-            flex
-            bg-white
-            w-full
-            shadow-sm
-            hover:shadow-lg
-            hover:-translate-y-1
-            transition-all
-            duration-300
-            sm:w-[48%] 
-            lg:w-[90%]  
-            h-32
-            rounded-md
-            cursor-pointer
-            justify-between"> 
+  <div
+    className="
+      flex
+      justify-center
+      flex-shrink-0">
+    <img
+      className="
+        w-full
+        max-w-[360px]
+        h-44
+        hover:scale-105
+        duration-300
+        sm:h-32
+        lg:h-36
+        object-cover
+        rounded-md"
+      src="/src/assets/picture/cappuccino.jpg"
+      alt=""/>
+  </div>
 
-            <div className=" w-[80%] m-3 ml-4 flex flex-col justify-between " > 
-                <h2 className="font-bold text-[#1D3557]">Coffee Brazilian</h2>
-                <p className="text-[12px] text-[#5F6368]">The traditional Brazilian Coffee </p>
-                <h2 className="font-bold text-[#1D3557]">$19.00</h2>
-            </div>
+  <div className="flex flex-col flex-1 justify-between lg:mt-2">
+    <div>
+      <h2 className="text-lg sm:text-xl font-bold text-[#1D3557]">Coffee Brazilian</h2>
+      <p className="text-sm text-[#5F6368] mt-2">Savor the bold aroma and smooth flavor of premium Brazilian coffee made with carefully selected beans.</p>
+    </div>
 
-            <div className=" flex justify-center items-center">
-                <img className="h-24 mr-5" src="/src/assets/picture/coffee_hero-remove_bg.png" alt="" />
-            </div>
-        </div>
-    </Link>
+    <div
+      className="
+        flex
+        flex-col
+        sm:flex-row
+        sm:items-center
+        sm:justify-end
+        gap-3
+        mt-2
+        md:gap-6
+        lg:mt-5">
 
-    )
+      <h2 className="text-lg font-bold text-[#1D3557]">$19.00</h2>
+
+      <button
+        className="
+          bg-[#0344DC]
+          text-white
+          h-9
+          w-full
+          rounded-md
+          text-md
+          font-semibold
+          hover:bg-blue-500
+          transition-all
+          duration-300
+          md:w-20
+          md:h-8
+          lg:w-22
+          lg:h-7
+          lg:text-sm
+          ">
+        Buy
+      </button>
+    </div>
+  </div>
+</div>
+</Link>
+  )
 }
 
 export default MenuItem
