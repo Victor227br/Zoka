@@ -1,5 +1,6 @@
 import { useState, useEffect} from "react";
 import { getItem, setItem } from "../services/ProductService";
+import FormProduct from "../components/FormProduct";
 
 export const useProductsActions = () => {
   const [isFormOpen, setIsFormOpen ] = useState(false)
@@ -16,8 +17,9 @@ export const useProductsActions = () => {
 
   const addProduct = (product) => {
     return setProducts([...products, product])
+    closeForm();
   }
-  
+
   useEffect(() => {
     setItem(products)
   },[products])
@@ -27,32 +29,36 @@ export const useProductsActions = () => {
     return setProducts(deleteProduct)
   }
 
-  const openEditForm = (id) => {
-    const findProduct = products.find(product => product.id === id)
-    setEditingProduct(findProduct)
-    openForm()
+//   const openEditForm = (id) => {
+//     const findProduct = products.find(product => product.id === id)
+//     setEditingProduct(findProduct)
+//     openForm()
+//   }
+
+//   const replaceProduct = (newProduct) => {
+//     const updateProducts = products.map(product => {
+//       if(product.id === newProduct.id){
+//         return newProduct
+//       } else {
+//         return product
+//       }
+//     })
+//   setProducts(updateProducts)
+//   closeForm()
+// };
+
+  const editProduct = (id) => {
+   const product = products.find(product => product.id === id)
+    setEditingProduct(product)
+    setIsFormOpen(true)
   }
 
-  const replaceProduct = (newProduct) => {
-    const updateProducts = products.map(product => {
-      if(product.id === newProduct.id){
-        return newProduct
-      } else {
-        return product
-      }
-    })
-  setProducts(updateProducts)
-  closeForm()
-};
-  
   return {
     products,
     editingProduct,
     isFormOpen,
     addProduct,
     removeProduct,
-    replaceProduct,
-    openEditForm,
     openForm, 
     closeForm
   }
