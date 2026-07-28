@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react"
 import { useProductsActions } from "../hooks/useProductActions"
 
-const FormProduct = ({editingProduct, closeForm, addProduct, replaceProduct}) => {
+const FormProduct = ({editingProduct, closeForm, addProduct}) => {
 
   const inicialValue = {
     id: new Date().getTime().toString(),
@@ -26,7 +26,7 @@ const FormProduct = ({editingProduct, closeForm, addProduct, replaceProduct}) =>
     if (!formData.name.trim() || !formData.description.trim()){
       window.alert("Fill in all the input fields")
     } else{
-      return editingProduct ? replaceProduct(formData) : addProduct(formData)
+       addProduct(formData)
     }
     closeForm()
   }

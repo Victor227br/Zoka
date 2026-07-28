@@ -11,10 +11,10 @@ const ManageProducts = () => {
     isFormOpen, 
     removeProduct,
     addProduct,
-    replaceProduct,
     openEditForm, 
     openForm, 
-    closeForm} = useProductsActions()
+    closeForm 
+  } = useProductsActions()
 
   return(
       <>
