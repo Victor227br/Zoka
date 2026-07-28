@@ -242,7 +242,7 @@ const Home = () => {
               flex 
               items-center 
               justify-center">
-              🌐
+              <img className="h-6" src="./src/assets/icon/instagram.png" alt="" />
             </a>
 
             <a href="#"
@@ -255,7 +255,7 @@ const Home = () => {
               transition 
               flex items-center 
               justify-center">
-              📷
+                <img className="h-6" src="./src/assets/icon/linkedin.png" alt="" />
             </a>
 
             <a href="#"
@@ -269,7 +269,7 @@ const Home = () => {
               flex 
               items-center 
               justify-center">
-              💼
+              <img className="h-6" src="./src/assets/icon/facebook.png" alt="" />
             </a>
           </div>
         </section>
