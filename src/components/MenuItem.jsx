@@ -29,11 +29,11 @@ return(
       className="
         w-full
         max-w-[360px]
-        h-44
+        h-54
         hover:scale-105
         duration-300
         sm:h-32
-        lg:h-36
+        lg:h-40
         object-cover
         rounded-md"
       src="/src/assets/picture/cappuccino.jpg"
