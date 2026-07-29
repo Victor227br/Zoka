@@ -1,7 +1,5 @@
 import AdminProductItem from "./AdminProductItem"
 import FormProduct from "./FormProduct"
-import Product from "../pages/Product"
-import { getItem, setItem } from "../services/ProductService";
 import { useProductsActions } from "../hooks/useProductActions";
 
 const ManageProducts = () => {
@@ -9,11 +7,21 @@ const ManageProducts = () => {
     products, 
     editingProduct, 
     isFormOpen, 
+    search,
+    category, 
+    status,
+    filteredProducts,
+    totalStock,
     removeProduct,
     addProduct,
-    openEditForm, 
+    editProduct,
+    totalProducts,
     openForm, 
-    closeForm 
+    closeForm,
+    clearFilter,
+    setSearch,
+    setCategory,
+    setStatus,
   } = useProductsActions()
 
   return(
@@ -64,7 +72,7 @@ const ManageProducts = () => {
           editingProduct={editingProduct} 
           closeForm={closeForm} 
           addProduct={addProduct} 
-          replaceProduct={replaceProduct}
+          editProduct={editProduct}
         />
       </div>
     </div>
@@ -104,7 +112,7 @@ const ManageProducts = () => {
     </div>
     <div className="flex flex-col items-center">
       <p className="text-gray-500 text-sm">Total Products</p>
-      <h3 className="text-2xl font-bold text-slate-800">21</h3>
+      <h3 className="text-2xl font-bold text-slate-800">{totalProducts()}</h3>
       <p className="text-[#0344DC] text-sm">Active</p>
     </div>
   </div>
@@ -140,7 +148,7 @@ const ManageProducts = () => {
 
     <div className="flex flex-col items-center">
       <p className="text-gray-500 text-sm">Total Stock</p>
-      <h3 className="text-2xl font-bold text-slate-800">487</h3>
+      <h3 className="text-2xl font-bold text-slate-800">{totalStock}</h3>
       <p className="text-[#0344DC] text-sm">Units</p>
     </div>
   </div>
@@ -221,6 +229,8 @@ const ManageProducts = () => {
 <section className="flex flex-col gap-3 p-4">
   <input
     type="text"
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
     placeholder="Find products..."
     className="
       w-full
@@ -236,19 +246,10 @@ const ManageProducts = () => {
       focus:ring-[#0344DC]"/>
 
   <div className="grid grid-cols-2 gap-3">
-    <select
-      className="
-        h-12
-        px-3
-        rounded-xl
-        border
-        border-slate-200
-        bg-white
-        text-slate-700">
-      <option>All Categories</option>
-    </select>
 
-    <select
+  <select
+    value={category}
+      onChange={(e) => setCategory(e.target.value)}
       className="
         h-12
         px-3
@@ -257,11 +258,32 @@ const ManageProducts = () => {
         border-slate-200
         bg-white
         text-slate-700">
-      <option>Status: All</option>
+      <option value={"All"}>All Categories</option>
+      <option value={"Hot Drink"}>Hot Drink</option>
+      <option value={"Cold Drink"}>Cold Drink</option>
+      <option value={"Special Drink"}>Special Drink</option>
+      <option value={"Package"}>Package</option>
+  </select>
+
+  <select
+    value={status}
+    onChange={(e) => setStatus(e.target.value)}
+      className="
+        h-12
+        px-3
+        rounded-xl
+        border
+        border-slate-200
+        bg-white
+        text-slate-700">
+      <option value={"All"}>Status: All</option>
+      <option value={"Active"}>Active</option>
+      <option value={"Inactive"}>Inactive</option>
     </select>
   </div>
 
   <button
+  onClick={clearFilter}
     className="
       flex
       items-center
@@ -280,21 +302,20 @@ const ManageProducts = () => {
 </section>
 
 <section>
-     {
-      products.map((product) =>{
-        const {id} = product;
-        return(
-        <AdminProductItem 
-          key={id}  
-          product={product}
-          removeProduct={removeProduct}
-          openEditForm={openEditForm}
-          >
+  {
+    filteredProducts.map((product) =>{
+    const {id} = product;
+      return(
+      <AdminProductItem 
+        key={id}  
+        product={product}
+        removeProduct={removeProduct}
+        openForm={openForm}
+        >
         </AdminProductItem> 
-       )
-      })
-     }
-
+      )
+    })
+  }
   </section>
   </>
   )
