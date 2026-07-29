@@ -1,8 +1,8 @@
 import {useState, useEffect} from "react"
 import { useProductsActions } from "../hooks/useProductActions"
 
-const FormProduct = ({editingProduct, closeForm, addProduct}) => {
-
+const FormProduct = ({editingProduct, closeForm, addProduct, editProduct}) => {
+  
   const inicialValue = {
     id: new Date().getTime().toString(),
     name:"",
@@ -19,14 +19,18 @@ const FormProduct = ({editingProduct, closeForm, addProduct}) => {
   if (editingProduct) {
     setFormData(editingProduct);
   }
-}, [editingProduct]);
+}, []);
 
   const handleSubmit = (event) => {
     event.preventDefault() 
     if (!formData.name.trim() || !formData.description.trim()){
       window.alert("Fill in all the input fields")
     } else{
-       addProduct(formData)
+      if(editingProduct){
+        editProduct(formData)
+      } else{
+        addProduct(formData)
+      }
     }
     closeForm()
   }
@@ -139,6 +143,7 @@ const FormProduct = ({editingProduct, closeForm, addProduct}) => {
         <option value={"Hot Drink"}>Hot Drink</option>
         <option value={"Cold Drink"}>Cold Drink</option>
         <option value={"Special Drink"}>Special Drink</option>
+        <option value={"Package"}>Package</option>
       </select>
     </div>
 
