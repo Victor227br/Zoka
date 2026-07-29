@@ -15,7 +15,6 @@ return(
     transition-all
     duration-300
     rounded-md
-    cursor-pointer
     p-4
     gap-4
     sm:items-center">
@@ -69,6 +68,7 @@ return(
           rounded-md
           text-md
           font-semibold
+          hover:cursor-pointer
           hover:bg-blue-500
           transition-all
           duration-300
