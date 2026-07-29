@@ -1,6 +1,4 @@
-import { useProductsActions } from "../hooks/useProductActions";
-
-const AdminProductItem = ({product, removeProduct, openEditForm}) => {
+const AdminProductItem = ({product, removeProduct, openForm}) => {
   const {id, name, price, stock, type, status, description} = product;
 
 return (
@@ -29,7 +27,7 @@ return (
 
     <div className="flex items-center gap-2 lg:gap-4">
      <button 
-      onClick={() => openEditForm(id)}
+      onClick={() => openForm(id)}
       className="
       w-9 
       h-9 
