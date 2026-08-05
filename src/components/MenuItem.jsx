@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 
-const MenuItem = () => {
+const MenuItem = ({product}) => {
+  const {id, name, price, stock, type, status, description} = product;
+
 return(
  <Link to="/Product">
 <div
@@ -41,8 +43,8 @@ return(
 
   <div className="flex flex-col flex-1 justify-between lg:mt-2">
     <div>
-      <h2 className="text-lg sm:text-xl font-bold text-[#1D3557]">Coffee Brazilian</h2>
-      <p className="text-sm text-[#5F6368] mt-2">Savor the bold aroma and smooth flavor of premium Brazilian coffee made with carefully selected beans.</p>
+      <h2 className="text-lg sm:text-xl font-bold text-[#1D3557]">{name}</h2>
+      <p className="text-sm text-[#5F6368] mt-2">{description}</p>
     </div>
 
     <div
@@ -57,7 +59,7 @@ return(
         md:gap-6
         lg:mt-5">
 
-      <h2 className="text-lg font-bold text-[#1D3557]">$19.00</h2>
+      <h2 className="text-lg font-bold text-[#1D3557]">${price}</h2>
 
       <button
         className="
