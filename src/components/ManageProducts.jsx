@@ -1,28 +1,24 @@
 import AdminProductItem from "./AdminProductItem"
 import FormProduct from "./FormProduct"
-import { useProductsActions } from "../hooks/useProductActions";
+import { useContext } from "react";
+import { ProductsContext } from "../context/ProductsContext";
+import { useProductsFilters } from "../hooks/useProductsFilters";
 
 const ManageProducts = () => {
-  const { 
-    products, 
-    editingProduct, 
-    isFormOpen, 
-    search,
-    category, 
-    status,
-    filteredProducts,
-    totalStock,
-    removeProduct,
-    addProduct,
-    editProduct,
-    totalProducts,
-    openForm, 
-    closeForm,
-    clearFilter,
-    setSearch,
-    setCategory,
-    setStatus,
-  } = useProductsActions()
+  const {isFormOpen ,openForm} = useContext(ProductsContext)
+  
+  const {  
+   search,
+   category, 
+   status,
+   filteredProducts,
+   totalStock,
+   clearFilter,
+   totalProducts,
+   setSearch,
+   setCategory,
+   setStatus,
+  } = useProductsFilters()
 
   return(
       <>
@@ -69,10 +65,6 @@ const ManageProducts = () => {
           max-w-4xl
           my-8">
         <FormProduct 
-          editingProduct={editingProduct} 
-          closeForm={closeForm} 
-          addProduct={addProduct} 
-          editProduct={editProduct}
         />
       </div>
     </div>
@@ -309,7 +301,6 @@ const ManageProducts = () => {
       <AdminProductItem 
         key={id}  
         product={product}
-        removeProduct={removeProduct}
         openForm={openForm}
         >
         </AdminProductItem> 
