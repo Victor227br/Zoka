@@ -1,39 +1,11 @@
-import {useState, useEffect} from "react"
-import { useProductsActions } from "../hooks/useProductActions"
+import { useFormProduct } from "../hooks/useFormProduct"
+import { ProductsContext } from "../context/ProductsContext"
+import { useContext } from "react"
 
-const FormProduct = ({editingProduct, closeForm, addProduct, editProduct}) => {
-  
-  const inicialValue = {
-    id: new Date().getTime().toString(),
-    name:"",
-    price:"",
-    stock:"",
-    type: "Hot Drink",
-    status: "Active ",
-    description: ""
-  }
+const FormProduct = () => {
 
-  const [formData, setFormData] = useState(inicialValue)
-
-  useEffect(() => {
-  if (editingProduct) {
-    setFormData(editingProduct);
-  }
-}, []);
-
-  const handleSubmit = (event) => {
-    event.preventDefault() 
-    if (!formData.name.trim() || !formData.description.trim()){
-      window.alert("Fill in all the input fields")
-    } else{
-      if(editingProduct){
-        editProduct(formData)
-      } else{
-        addProduct(formData)
-      }
-    }
-    closeForm()
-  }
+  const {formData, textValueButton, validForm ,setFormData, handleSubmit} = useFormProduct()  
+  const {closeForm} = useContext(ProductsContext)
 
   return(
     <section
@@ -200,6 +172,7 @@ const FormProduct = ({editingProduct, closeForm, addProduct, editProduct}) => {
 
     <div className="flex gap-3 mt-2">
       <button
+      disabled={validForm}
         type="submit"
         className="
           flex-1
@@ -207,8 +180,12 @@ const FormProduct = ({editingProduct, closeForm, addProduct, editProduct}) => {
           rounded-xl
           bg-[#0344DC]
           text-white
-          font-medium">
-        Save Product
+          font-medium
+          disabled:bg-slate-400
+          disabled:text-slate-200
+          disabled:cursor-not-allowed
+          disabled:opacity-70">
+        {textValueButton}
       </button>
 
     </div>
