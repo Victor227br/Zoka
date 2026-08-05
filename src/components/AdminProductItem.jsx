@@ -1,5 +1,10 @@
-const AdminProductItem = ({product, removeProduct, openForm}) => {
+import { ProductsContext } from "../context/ProductsContext";
+import { useProductsFilters } from "../hooks/useProductsFilters";
+import { useContext } from "react";
+
+const AdminProductItem = ({product, openForm}) => {
   const {id, name, price, stock, type, status, description} = product;
+  const {removeProduct} = useContext(ProductsContext)
 
 return (
   <div className=" bg-white rounded-xl shadow-sm p-4 border border-slate-100">
