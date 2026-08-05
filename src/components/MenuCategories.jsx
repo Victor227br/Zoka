@@ -1,9 +1,12 @@
 import MenuItem from "./MenuItem"
+import { ProductsContext } from "../context/ProductsContext"
+import { useContext } from "react"
 
  const MenuCategories = () =>{
+  const {products} = useContext(ProductsContext)
     return (
     <section className = "flex flex-col mt-16">
-      <h2 className="text-3xl text-[#1D3557] font-bold m-6 ml-10 mb-3 lg:ml-[5%]">Coffees</h2>
+      <h2 className="text-3xl text-[#1D3557] font-bold m-6 ml-10 mb-3 lg:ml-[5%]">Our Products </h2>
     <div
     className="
     grid
@@ -15,22 +18,18 @@ import MenuItem from "./MenuItem"
     md:grid-cols-2
     xl:grid-cols-3
     2xl:grid-cols-4">
-        <MenuItem></MenuItem>
-        <MenuItem></MenuItem>
-        <MenuItem></MenuItem>
-        <MenuItem></MenuItem>
-        <MenuItem></MenuItem>
-        <MenuItem></MenuItem>
-        <MenuItem></MenuItem>
-        <MenuItem></MenuItem>
-        <MenuItem></MenuItem>
-        <MenuItem></MenuItem>
-        <MenuItem></MenuItem>
-        <MenuItem></MenuItem>
-        <MenuItem></MenuItem>
-        <MenuItem></MenuItem>
-        <MenuItem></MenuItem>
-        <MenuItem></MenuItem>
+
+    {products.map((product) => {
+      const {id} = product;
+      return(
+        <MenuItem
+          key={id}  
+          product={product}
+          >
+        </MenuItem>
+      )
+    })
+    }
     </div>
     </section>
     )
