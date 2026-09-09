@@ -3,7 +3,6 @@ import { ProductsContext } from "../context/ProductsContext"
 import { useContext } from "react"
 
 const FormProduct = () => {
-
   const {formData, textValueButton, validForm ,setFormData, handleSubmit} = useFormProduct()  
   const {closeForm} = useContext(ProductsContext)
 
@@ -133,23 +132,29 @@ const FormProduct = () => {
           bg-white
           outline-none
           focus:border-[#0344DC]">
-        <option>Active</option>
-        <option>Inactive</option>
+        <option value={"active"}>Active</option>
+        <option value={"inactive"}>Inactive</option>
       </select>
     </div>
 
     <div>
-      <label className="block text-sm font-medium text-slate-700 mb-2">Product Image</label> 
-      <input
-        type="file"
+      <label className="block text-sm font-medium text-slate-700 mb-2">Product Image</label>
+      {formData.type !== "Package" &&(
+       <input
+        type="url"
+        placeholder="https://exemplo.com"
+        value={formData.img}
+        onChange={(e) => setFormData({...formData, img: e.target.value})}
         className=" 
-        w-full 
-        p-3 
-        rounded-xl 
-        border 
-        border-dashed 
-        border-slate-300 
-        text-sm"/>
+          w-full
+          p-3
+          rounded-xl
+          border
+          border-slate-200
+          resize-none
+          outline-none
+          focus:border-[#0344DC]"/>
+      )} 
     </div>
 
     <div>

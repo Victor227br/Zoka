@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
 
-
 export const Carousel = ({ slides }) => {
   const getVisibleSlides = () => {
     if (window.innerWidth >= 1024) return 3;
-    return 2; // Mobile e Tablet
+    return 2; 
   };
 
   const [visibleSlides, setVisibleSlides] = useState(getVisibleSlides());
@@ -18,7 +17,6 @@ export const Carousel = ({ slides }) => {
     };
 
     window.addEventListener("resize", handleResize);
-    
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -43,7 +41,7 @@ export const Carousel = ({ slides }) => {
         {slides.map((slide, index) => (
           <div
             key={index}
-            className="
+              className="
               w-1/2
               md:w-1/2
               lg:w-1/3
