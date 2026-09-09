@@ -3,7 +3,6 @@ import { getItem, setItem } from "../services/ProductService";
 import FormProduct from "../components/FormProduct";
 
 export const useProductsActions = () => {
-
   const [isFormOpen, setIsFormOpen ] = useState(false)
   const [products, setProducts] = useState(getItem())
   const [editingProduct, setEditingProduct] = useState(null)
@@ -13,12 +12,12 @@ export const useProductsActions = () => {
     setEditingProduct(findProduct)
     setIsFormOpen(true)    
   }
-
+  
   const closeForm = () => {
    setIsFormOpen(false)
     setEditingProduct(null);
   }
-
+  
   const addProduct = (product) => {
     return setProducts([...products, product])
   }
@@ -37,7 +36,7 @@ export const useProductsActions = () => {
     currentProducts.map((product) =>
       product.id === updatedProduct.id ? updatedProduct : product))
   }
-
+  
   return {
     products,
     editingProduct,
@@ -46,7 +45,6 @@ export const useProductsActions = () => {
     removeProduct,
     editProduct,
     openForm, 
-    closeForm,
-  
+    closeForm,  
   }
 }

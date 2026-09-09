@@ -3,8 +3,7 @@ import { ProductsContext } from "../context/ProductsContext"
 import coffeePackage from "../assets/picture/coffee_package.png";
 
 export const useFormProduct = () => {
-
-  const {editingProduct, addProduct, editProduct, closeForm} = useContext(ProductsContext)
+  const {editingProduct, products ,addProduct, editProduct, closeForm} = useContext(ProductsContext)
 
   const inicialValue = {
     id: new Date().getTime().toString(),
@@ -12,26 +11,27 @@ export const useFormProduct = () => {
     price:"",
     stock:"",
     type: "Hot Drink",
-    status: "Active ",
+    status: "active",
     description: "",
     img: "",
   }
-
+  
   const [formData, setFormData] = useState(inicialValue);
   const [textValueButton, setTextValueButton] = useState("Save Product")
 
   useEffect(() => {
-  if (editingProduct) {
-    setFormData(editingProduct);
-    setTextValueButton("Edit Product")
-  }
-}, []);
+    if(editingProduct){
+      setFormData(editingProduct)
+      setTextValueButton("Edit Product")
+    } 
+  }, [editingProduct])
 
   const validForm = 
     !formData.name.trim() ||
-    !formData.description.trim() || 
-    !formData.price.trim() ||
-    !formData.stock.trim()
+    !formData.description.trim() ||
+    !formData.img.trim() ||
+    !formData.price ||
+    !formData.stock
 
   const handleSubmit = (event) => {
     event.preventDefault() 
@@ -54,5 +54,4 @@ export const useFormProduct = () => {
     setFormData,
     handleSubmit
   }
-
 } 

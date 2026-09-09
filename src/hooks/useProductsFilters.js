@@ -2,9 +2,7 @@ import { useState, useContext } from "react";
 import { ProductsContext } from "../context/ProductsContext";
 
 export const useProductsFilters = () => {
-    
   const {products} = useContext(ProductsContext)
-
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [status, setStatus] = useState("All");
@@ -25,20 +23,34 @@ export const useProductsFilters = () => {
   const totalProducts = () => {
     return products.length;
   };
+  
+  const totalStock = () => {
+  let total = 0;
+  products.forEach(product => {
+    total += Number(product.stock);
+  });
+    return total;
+}
 
-  const totalStock = products.reduce((total, product) => {
-    return total + product.stock;
-  }, 0);
-
-
+  const totalProductsInative = () => { 
+    let total = 0;
+    products.forEach(product => {
+      if(product.status === "inactive"){
+        total++;
+      }
+    })
+    return total
+  }
+  
   return{
    search,
    category, 
    status,
    filteredProducts,
-   totalStock,
    clearFilter,
    totalProducts,
+   totalStock,
+   totalProductsInative,
    setSearch,
    setCategory,
    setStatus,
