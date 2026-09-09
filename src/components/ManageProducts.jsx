@@ -12,9 +12,10 @@ const ManageProducts = () => {
    category, 
    status,
    filteredProducts,
-   totalStock,
    clearFilter,
    totalProducts,
+   totalStock,
+   totalProductsInative,
    setSearch,
    setCategory,
    setStatus,
@@ -139,8 +140,8 @@ const ManageProducts = () => {
     </div>
 
     <div className="flex flex-col items-center">
-      <p className="text-gray-500 text-sm">Total Stock</p>
-      <h3 className="text-2xl font-bold text-slate-800">{totalStock}</h3>
+      <p className="text-gray-500 text-sm">Stock</p>
+      <h3 className="text-2xl font-bold text-slate-800">{totalStock()}</h3>
       <p className="text-[#0344DC] text-sm">Units</p>
     </div>
   </div>
@@ -176,7 +177,7 @@ const ManageProducts = () => {
 
     <div className="flex flex-col items-center">
       <p className="text-gray-500 text-sm">Categories</p>
-      <h3 className="text-2xl font-bold text-slate-800">6</h3>
+      <h3 className="text-2xl font-bold text-slate-800">3</h3>
       <p className="text-[#0344DC] text-sm">Registered</p>
     </div>
   </div>
@@ -212,7 +213,7 @@ const ManageProducts = () => {
 
     <div className="flex flex-col items-center">
       <p className="text-gray-500 text-sm">Inactive Products</p>
-      <h3 className="text-2xl font-bold text-slate-800">3</h3>
+      <h3 className="text-2xl font-bold text-slate-800">{totalProductsInative()}</h3>
       <p className="text-red-500 text-sm">Inactive</p>
     </div>
   </div>
