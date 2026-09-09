@@ -7,7 +7,7 @@
     "type": "Hot Drink",
     "status": "Active",
     "description": "Traditional Italian espresso with an intense flavor and rich crema.",
-    "img": ""
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJY0BFIo0lyKjkesynB59yAzYVdQp8veGRPjubx7y12Q&s=10"
   },
 
   {
@@ -18,7 +18,7 @@
     "type": "Hot Drink",
     "status": "Active",
     "description": "Creamy coffee with steamed milk and a layer of milk foam.",
-    "img": ""
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY-WtFpTlpp6wQsXTRYQ0jlL1EoRMqIWgPpT5bO7SE6A&s=10"
   },
 
   {
@@ -29,7 +29,7 @@
     "type": "Hot Drink",
     "status": "Active",
     "description": "Smooth espresso mixed with plenty of steamed milk.",
-    "img": ""
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRr1YFLcI6PeP-j-WM7P2wzbV14KTg0eGHhKFBOt8h8Q&s=10"
   },
 
   {
@@ -40,7 +40,7 @@
     "type": "Hot Drink",
     "status": "Active",
     "description": "Espresso with chocolate, steamed milk, and whipped cream.",
-    "img": ""
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRo_MPyzlbxWPsLuwr7m0Ml8q1fmKf9ORx60C1tVL0xrg&s=10"
   },
 
   {
@@ -51,7 +51,7 @@
     "type": "Cold Drink",
     "status": "Active",
     "description": "Refreshing cold coffee served over ice.",
-    "img": ""
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThCDUcRe5QOEiuhNr-XgPSczdGFYwwnRiywbw-ChJXWQ&s=10"
   },
 
   {
@@ -62,7 +62,7 @@
     "type": "Cold Drink",
     "status": "Active",
     "description": "Blended coffee with caramel syrup and whipped cream.",
-    "img": ""
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1hqcEPTk7ikk6v-_L7aIIk2X2og_QlOkB2ruZSa-WSw&s=10"
   },
 
   {
@@ -73,7 +73,7 @@
     "type": "Cold Drink",
     "status": "Active",
     "description": "Slow-brewed coffee with a smooth vanilla flavor.",
-    "img": ""
+    "img": "https://cdn.shopify.com/s/files/1/0131/2381/3434/files/iced_coffee-1200x800_480x480.jpg?v=1660141889"
   },
 
   {
@@ -84,7 +84,7 @@
     "type": "Special Drink",
     "status": "Inactive",
     "description": "Seasonal latte with pumpkin spices and creamy milk.",
-    "img": ""
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4upQZ6ndaoWRae0YNDF0NPd7JbFB-3nSwhUMNB2kJaw&s=10"
   },
 
   {
@@ -95,7 +95,7 @@
     "type": "Special Drink",
     "status": "Active",
     "description": "Creamy latte flavored with roasted hazelnut syrup.",
-    "img": ""
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1lJWZtm_QOnYAc1WpQAF5NI3Hue1ZUJ1v9juBwyhgSg&s=10"
   },
 
   {
@@ -106,6 +106,6 @@
     "type": "Special Drink",
     "status": "Active",
     "description": "Vanilla ice cream topped with a shot of hot espresso.",
-    "img": ""
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvM2FfKm24gsaH8nQ1-tGWDxMVRqs5oWbZUgOcCjslNA&s=10"
   }
 ]
