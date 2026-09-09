@@ -1,15 +1,15 @@
 import MenuCategories from "../components/MenuCategories";
 import { Carousel } from "../components/carouselHome";
+import  Header  from "../components/Header";
 
 const Home = () => {
-
   let slides = [
       "/src/assets/picture/coffee_package-carousel.png",
       "/src/assets/picture/cappuccino.jpg",
       "/src/assets/picture/coffee_package-carousel.png",
       "/src/assets/picture/cappuccino.jpg",
-  ]
-
+    ]
+    
   return (
     <>
   <section
@@ -24,31 +24,7 @@ const Home = () => {
     bg-[50%_10%]
     lg:bg-center">
 
-      <header 
-      className=" 
-      flex 
-      items-center 
-      justify-between 
-      h-[9vh] 
-      bg-black/40 
-      backdrop-blur-md 
-      border-b 
-      border-white/10">
-        
-        <h1 className="ml-6 text-[clamp(1.5rem,1.5vw,2.3rem)] text-white lg:ml-16">Zoka</h1>
-          <div className=" flex items-center justify-around w-24 mr-8 lg:mr-16">
-            <div className="relative flex items-center justify-center cursor-pointer">
-              <div className="absolute -top-2 -right-2 flex items-center justify-center w-5 h-5 rounded-full bg-[#0344DC]">
-                <p className="text-xs text-white">2</p>
-              </div>
-              
-                <img className="h-7 cursor-pointer" src="./src/assets/icon/icon_shoppingCart-white.png"/>
-              </div>
-                <div className="cursor-pointer">
-                    <img className="h-9" src="./src/assets/icon/icon_profile.png" alt="Profile"/>
-                </div>
-            </div>
-        </header>
+  <Header/>
 
 <div
   className="
@@ -87,7 +63,7 @@ const Home = () => {
       <h2 className="text-white font-medium text-[clamp(2rem,3.4vw,4rem)]">Strong <span className="text-blue-500 font-medium">Coffee</span></h2>
       <h2 className="text-white lg:font-thin lg:tracking-wide lg:font-extralight text-[clamp(2rem,3.4vw,4rem)]">Clean <span className="text-blue-500 ">Experience</span></h2>
      
-      <div className="flex items-center  mr-6 ml-6 text-center lg:m-0">
+      <div className="flex items-center  mr-6 ml-6 lg:m-0">
       <p className="text-white mt-6 lg:ml-1">Freshly roasted specialty coffee with bold flavor and unforgettable aroma.</p>
       </div>
 
@@ -111,7 +87,7 @@ const Home = () => {
         hover:bg-white/30
         hover:text-white
         lg:w-[46%]
-        lg:h-[4.2vh]
+        lg:h-[4.7vh]
         lg:text-[1.2vw]
         lg:bg-white
         lg:text-[#0344DC]">
@@ -132,7 +108,7 @@ const Home = () => {
       leading-8
       font-normal
       md:text-md
-      lg:text-md"> 
+      lg:text-lg"> 
       Since <span className="font-semibold">1912</span>, Zoka in Santos has been
     part of Brazil's <span className="font-semibold">coffee history and culture</span>.
     We are an in-house roasting and grinding company where
@@ -147,26 +123,24 @@ const Home = () => {
     className="
     flex 
     flex-col 
-    ml-[6%] 
-    mr-[6%] 
+    ml-[4%] 
+    mr-[1%] 
     mt-[4%] 
     items-center
     justify-between
     lg:flex-row
-    lg:items-start">
-
-    <div className="lg:w-[30%] mt-[20%] md:mt-[5%] lg:mt-[10%]">
+    lg:items-starts
+    lg: w-full">
+    <div className="lg:w-[30%] mt-[20%] md:mt-[5%] lg:mb-[5%]">
       <h2 className="text-[clamp(1.5rem,2vw,2.4rem)] text-[#2F2F2F] font-semibold ">Discover our coffees.</h2>
       <p className=" text-[#2F2F2F] mt-4">discover our premium coffee collection, crafted from carefully selected beans to deliver rich aroma, exceptional flavor, and an unforgettable coffee experience.</p>
     </div>
-  <div className="lg:w-[60%] m-auto mt-[10%] md:mt-[5%] lg:mt-0">
+  <div className="lg:w-[55%] m-auto mt-[10%] md:mt-[5%] lg:mt-0">
     <Carousel slides={slides}/>
-  </div>
+</div>
       {/* <nav className=" h-[8vh] sticky top-0 z-50 -mt-6 bg-white w-[92%] mx-auto rounded-2xl shadow-lg p-4"></nav> */}
   </section>
-
           <MenuCategories />
-
 
     <footer className="bg-[#0F172A] text-white mt-20">
       <section className="max-w-7xl mx-auto px-6 py-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
