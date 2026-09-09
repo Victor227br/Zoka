@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 
 const MenuItem = ({product}) => {
-  const {id, name, price, stock, type, status, description} = product;
+  const {id, name, img, price, stock, type, status, description} = product;
 
 return(
- <Link to="/Product">
-<div
+   <Link to={`/product/${id}`}>
+      <div
   className="
     flex
     flex-col
@@ -21,25 +21,26 @@ return(
     gap-4
     sm:items-center">
 
-  <div
+<div 
+  className="
+  w-full 
+  h-64  
+  lg:w-40
+  lg:h-40
+  flex-shrink-0">
+  <img
     className="
-      flex
-      justify-center
-      flex-shrink-0">
-    <img
-      className="
-        w-full
-        max-w-[360px]
-        h-54
-        hover:scale-105
-        duration-300
-        sm:h-32
-        lg:h-40
-        object-cover
-        rounded-md"
-      src="/src/assets/picture/cappuccino.jpg"
-      alt=""/>
-  </div>
+      w-full
+      h-full
+      object-cover
+      rounded-md
+      hover:scale-105
+      duration-300
+    "
+    src={img}
+    alt=""
+  />
+</div>
 
   <div className="flex flex-col flex-1 justify-between lg:mt-2">
     <div>
