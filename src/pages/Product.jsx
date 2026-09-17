@@ -1,313 +1,266 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import {
+  IoArrowBack,
+  IoBagHandleOutline,
+  IoCheckmarkCircle,
+  IoCubeOutline,
+  IoFlashOutline,
+} from "react-icons/io5";
 import { useParams } from "react-router-dom";
-import   Header   from "../components/Header";
+
+import fallbackProductImage from "../assets/picture/coffee_package.png";
+import Header from "../components/Header";
 import { ProductsContext } from "../context/ProductsContext";
+import { useBackNavigation } from "../hooks/useBackNavigation";
+
+const sizes = [
+  { label: "Small", value: "120ml" },
+  { label: "Medium", value: "180ml" },
+  { label: "Large", value: "240ml" },
+];
+
+const sizeMultiplier = {
+  "120ml": 1,
+  "180ml": 1.2,
+  "240ml": 1.45,
+};
+
+const formatPrice = (price) =>
+  new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(price);
 
 export const Product = () => {
   const { id } = useParams();
   const { products } = useContext(ProductsContext);
+  const goBack = useBackNavigation();
 
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("120ml");
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "instant",
-    });
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, [id]);
 
-  const product = products.find(
-    (product) => product.id.toString() === id
-  );
-
-  const sizes = ["120ml", "180ml", "240ml"];
+  const product = products.find((item) => item.id.toString() === id);
 
   if (!product) {
     return (
-      <main className="flex min-h-screen items-center justify-center px-6">
-        <section className="text-center">
-          <h1 className="text-3xl font-bold text-[#1D3557]">
+      <main className="min-h-screen bg-[#F4F7FC]">
+        <Header />
+        <section className="mx-auto flex min-h-[calc(100vh-9vh)] max-w-xl flex-col items-center justify-center px-6 text-center">
+          <span className="text-sm font-bold uppercase tracking-[0.2em] text-[#0344DC]">
+            Zoka Coffee
+          </span>
+          <h1 className="mt-3 text-4xl font-bold text-[#1D3557]">
             Product not found
           </h1>
-
-          <p className="mt-2 text-[#5F6368]">
-            The product you are looking for does not exist.
+          <p className="mt-3 leading-7 text-slate-500">
+            This product is no longer available or the address is incorrect.
           </p>
+          <button
+            type="button"
+            onClick={goBack}
+            className="mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-[#0344DC] px-6 font-semibold text-white transition hover:bg-[#0238B8]"
+          >
+            <IoArrowBack />
+            Go back
+          </button>
         </section>
       </main>
     );
   }
 
+  const isAvailable =
+    product.status?.toLowerCase() === "active" && Number(product.stock) > 0;
+  const finalPrice =
+    Number(product.price) * quantity * sizeMultiplier[selectedSize];
+
   const increaseQuantity = () => {
-    setQuantity((prev) => prev + 1);
+    setQuantity((currentQuantity) =>
+      Math.min(currentQuantity + 1, Number(product.stock)),
+    );
   };
 
   const decreaseQuantity = () => {
-    setQuantity((prev) => Math.max(1, prev - 1));
+    setQuantity((currentQuantity) => Math.max(1, currentQuantity - 1));
   };
 
-  let finalPrice = product.price * quantity;
-
-  if (selectedSize === "180ml") {
-    finalPrice *= 1.2;
-  }
-
-  if (selectedSize === "240ml") {
-    finalPrice *= 1.45;
-  }
+  const handleImageError = (event) => {
+    event.currentTarget.onerror = null;
+    event.currentTarget.src = fallbackProductImage;
+  };
 
   return (
-  <main className="min-h-screen bg-white">
-          <Header/>
-  <div
-  className="
-    flex
-    min-h-screen
-    w-full
-    flex-col
-    justify-start
-    px-0
-    py-8
-    sm:py-10
-    lg:mx-auto
-    lg:max-w-7xl
-    lg:flex-row
-    lg:items-center
-    lg:justify-center
-    lg:gap-20
-    lg:px-8
-    lg:py-16
-    xl:max-w-[1500px]
-    xl:gap-28
-    xl:px-12">
-        
-      <figure
-        className="
-          flex
-          shrink-0
-          justify-center
-          h-full
-          lg:w-[52%]
-          lg:max-w-[700px]">
-        <img
-          src={product.img}
-          alt={product.name}
-          className="
-            h-auto
-            w-full
-            object-cover
-            lg:max-h-[620px]
-            lg:object-contain"/>
-      </figure>
+    <main className="min-h-screen bg-[#F4F7FC] text-[#1D3557]">
+      <Header />
 
-      <section
-        className="
-          w-full
-          px-5
-          pt-8
-          sm:px-10
-          sm:pt-10
-          lg:w-[48%]
-          lg:max-w-[620px]
-          lg:px-0
-          lg:pt-0">
+      <article className="min-h-[calc(100vh-9vh)] bg-white lg:grid lg:grid-cols-2">
+          <section className="relative flex min-h-[440px] items-center justify-center overflow-hidden bg-gradient-to-br from-[#E7EEFC] via-[#F4F7FD] to-white p-6 sm:min-h-[580px] sm:p-12 lg:min-h-[calc(100vh-9vh)] lg:p-16">
+            <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full border-[48px] border-white/50" />
+            <div className="absolute -bottom-32 -right-24 h-80 w-80 rounded-full border-[54px] border-[#DCE7FA]/70" />
 
-        <header>
-          <p
-            className="
-              text-xs
-              font-bold
-              uppercase
-              tracking-[0.12em]
-              text-[#0344DC]
-              sm:text-sm">
-            {product.type}
-          </p>
+            <figure className="relative z-[1] aspect-square w-full max-w-[600px] overflow-hidden rounded-[30px] bg-white shadow-[0_28px_70px_rgba(29,53,87,0.16)] sm:rounded-[40px]">
+              <img
+                src={product.img || fallbackProductImage}
+                alt={product.name}
+                onError={handleImageError}
+                className="h-full w-full object-cover transition duration-700 hover:scale-[1.03]"
+              />
+            </figure>
 
-          <h1
-            className="
-              mt-2
-              text-3xl
-              font-bold
-              leading-tight
-              text-[#1D3557]
-              sm:text-5xl
-              lg:text-6xl
-              lg:leading-[1.05]">
-            {product.name}
-          </h1>
+          </section>
 
-          <p
-            className="
-              mt-4
-              max-w-[580px]
-              text-[15px]
-              leading-6
-              text-[#5F6368]
-              sm:text-lg
-              sm:leading-relaxed">
-            {product.description}
-          </p>
-        </header>
+          <section className="flex flex-col bg-white px-6 py-8 sm:px-12 sm:py-12 lg:min-h-[calc(100vh-9vh)] lg:px-[8%] lg:py-10 xl:px-[11%]">
+            <button
+              type="button"
+              onClick={goBack}
+              className="group mb-10 inline-flex w-fit items-center gap-3 text-sm font-semibold text-slate-500 transition hover:text-[#0344DC] lg:mb-8"
+            >
+              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-lg text-[#1D3557] transition group-hover:border-[#0344DC] group-hover:bg-[#E9F0FF] group-hover:text-[#0344DC]">
+                <IoArrowBack />
+              </span>
+              Go back
+            </button>
 
-        <div className="mt-6 flex flex-wrap gap-2">
-          <span
-            className="
-              rounded-full
-              bg-[#E1E9F9]
-              px-4
-              py-2
-              text-xs
-              font-semibold
-              text-[#1D3557]
-              sm:text-sm">
-            Cold Coffee
-          </span>
+            <div className="mx-auto flex w-full max-w-[620px] flex-1 flex-col justify-center">
+              <div>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="inline-flex rounded-full bg-[#E9F0FF] px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-[#0344DC]">
+                  {product.type}
+                </span>
 
-          <span
-            className="
-              rounded-full
-              bg-[#E1E9F9]
-              px-4
-              py-2
-              text-xs
-              font-semibold
-              text-[#1D3557]
-              sm:text-sm">
-            Brazilian
-          </span>
-        </div>
+                <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-500">
+                  <IoCubeOutline className="text-base text-[#0344DC]" />
+                  <strong className="text-[#1D3557]">{product.stock}</strong>
+                  units in stock
+                </span>
+              </div>
 
-        <div className="my-7 h-px w-full bg-slate-200 sm:my-8" />
+              <h1 className="mt-5 text-4xl font-bold leading-[1.08] tracking-[-0.035em] text-[#1D3557] sm:text-5xl xl:text-6xl">
+                {product.name}
+              </h1>
 
-        <section aria-labelledby="size-title">
-          <div className="flex items-center justify-between">
-            <h2
-              id="size-title"
-              className="text-lg font-bold text-[#1D3557]">
-              Size
-            </h2>
+              <p className="mt-5 max-w-xl text-[15px] leading-7 text-slate-500 sm:text-base sm:leading-8">
+                {product.description}
+              </p>
+            </div>
 
-            <span className="text-sm font-medium text-[#5F6368]">
-              {selectedSize}
-            </span>
-          </div>
+            <div className="my-7 h-px bg-slate-100 sm:my-9" />
 
-          <div className="mt-4 grid grid-cols-3 gap-2 sm:max-w-[430px] sm:gap-3">
-            {sizes.map((size) => (
+            <section aria-labelledby="size-title">
+              <div className="flex items-end justify-between gap-4">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#0344DC]">
+                    Choose yours
+                  </p>
+                  <h2 id="size-title" className="mt-1 text-lg font-bold">
+                    Cup size
+                  </h2>
+                </div>
+                <span className="text-sm font-semibold text-slate-400">
+                  {selectedSize}
+                </span>
+              </div>
+
+              <div className="mt-4 grid grid-cols-3 gap-2 sm:gap-3">
+                {sizes.map((size) => {
+                  const isSelected = selectedSize === size.value;
+
+                  return (
+                    <button
+                      key={size.value}
+                      type="button"
+                      aria-pressed={isSelected}
+                      onClick={() => setSelectedSize(size.value)}
+                      className={`rounded-2xl border px-2 py-3.5 text-left transition sm:px-4 ${
+                        isSelected
+                          ? "border-[#0344DC] bg-[#0344DC] text-white shadow-[0_10px_25px_rgba(3,68,220,0.22)]"
+                          : "border-slate-200 bg-white text-[#1D3557] hover:border-[#0344DC]/40 hover:bg-[#F7F9FD]"
+                      }`}
+                    >
+                      <span className="block text-xs font-bold sm:text-sm">
+                        {size.label}
+                      </span>
+                      <span
+                        className={`mt-0.5 block text-[10px] sm:text-xs ${
+                          isSelected ? "text-blue-100" : "text-slate-400"
+                        }`}
+                      >
+                        {size.value}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+
+            <div className="mt-7 flex items-end justify-between gap-5 rounded-2xl bg-[#F7F9FD] p-4 sm:mt-8 sm:p-5">
+              <div>
+                <p className="text-xs font-medium text-slate-400">Total price</p>
+                <p className="mt-1 text-2xl font-bold tracking-[-0.02em] text-[#1D3557] sm:text-3xl">
+                  {formatPrice(finalPrice)}
+                </p>
+              </div>
+
+              <div>
+                <p className="mb-2 text-right text-xs font-medium text-slate-400">
+                  Quantity
+                </p>
+                <div className="flex h-11 items-center rounded-xl border border-slate-200 bg-white p-1 shadow-sm">
+                  <button
+                    type="button"
+                    onClick={decreaseQuantity}
+                    disabled={quantity === 1}
+                    className="flex h-9 w-9 items-center justify-center rounded-lg text-lg font-medium transition hover:bg-[#E9F0FF] disabled:cursor-not-allowed disabled:text-slate-300"
+                    aria-label="Decrease quantity"
+                  >
+                    −
+                  </button>
+                  <span className="w-9 text-center text-sm font-bold">{quantity}</span>
+                  <button
+                    type="button"
+                    onClick={increaseQuantity}
+                    disabled={quantity >= Number(product.stock)}
+                    className="flex h-9 w-9 items-center justify-center rounded-lg text-lg font-medium transition hover:bg-[#E9F0FF] disabled:cursor-not-allowed disabled:text-slate-300"
+                    aria-label="Increase quantity"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 grid gap-3 sm:grid-cols-[1.35fr_1fr]">
               <button
-                key={size}
                 type="button"
-                onClick={() => setSelectedSize(size)}
-                className={`
-                  h-12
-                  rounded-xl
-                  text-sm
-                  font-semibold
-                  transition
-
-                  ${
-                    selectedSize === size
-                      ? "bg-[#0344DC] text-white"
-                      : "bg-[#E1E9F9] text-[#1D3557] hover:opacity-80"
-                  }`}>
-                {size}
+                disabled={!isAvailable}
+                className="inline-flex h-14 items-center justify-center gap-2 rounded-2xl bg-[#0344DC] px-5 font-bold text-white shadow-[0_14px_30px_rgba(3,68,220,0.25)] transition hover:-translate-y-0.5 hover:bg-[#0238B8] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:shadow-none"
+              >
+                <IoBagHandleOutline className="text-xl" />
+                Add to cart
               </button>
-            ))}
-          </div>
-        </section>
 
-        <div className="mt-7 sm:mt-8">
-          <p className="text-sm text-[#5F6368]">Price</p>
+              <button
+                type="button"
+                disabled={!isAvailable}
+                className="inline-flex h-14 items-center justify-center gap-2 rounded-2xl border border-[#0344DC] px-5 font-bold text-[#0344DC] transition hover:bg-[#E9F0FF] disabled:cursor-not-allowed disabled:border-slate-200 disabled:text-slate-300"
+              >
+                <IoFlashOutline className="text-xl" />
+                Buy now
+              </button>
+            </div>
 
-          <p className="mt-1 text-3xl font-bold text-[#1D3557] sm:text-4xl">
-            R$ {finalPrice.toFixed(2)}
-          </p>
-        </div>
-
-        <div className="mt-6 sm:mt-8">
-          <p className="mb-2 text-sm text-[#5F6368]">Quantity</p>
-
-          <div
-            className="
-              flex
-              h-12
-              w-36
-              items-center
-              justify-between
-              rounded-xl
-              bg-[#E1E9F9]
-              px-4
-              font-semibold
-              text-[#1D3557]">
-
-            <button
-              type="button"
-              onClick={decreaseQuantity}
-              className="px-2 text-lg"
-              aria-label="Decrease quantity">
-              −
-            </button>
-
-            <span>{quantity}</span>
-
-            <button
-              type="button"
-              onClick={increaseQuantity}
-              className="px-2 text-lg"
-              aria-label="Increase quantity">
-              +
-            </button>
-          </div>
-        </div>
-
-        <div
-          className="
-            mt-7
-            flex
-            w-full
-            flex-col
-            gap-2
-            sm:mt-8
-            sm:flex-row
-            sm:gap-3">
-
-          <button
-            type="button"
-            className="
-              h-12
-              w-full
-              rounded-xl
-              border-2
-              border-[#0344DC]
-              font-semibold
-              text-[#0344DC]
-              transition
-              hover:bg-[#0344DC]
-              hover:text-white">
-            Add to Cart
-          </button>
-
-          <button
-            type="button"
-            className="
-              h-12
-              w-full
-              rounded-xl
-              bg-[#0344DC]
-              font-semibold
-              text-white
-              transition
-              hover:bg-[#0235ad]">
-            Buy Now
-          </button>
-        </div>
-      </section>
-    </div>
-  </main>
-);
-
+              <p className="mt-5 flex items-center justify-center gap-2 text-xs font-medium text-slate-400 sm:justify-start sm:text-sm">
+                <IoCheckmarkCircle className="shrink-0 text-lg text-emerald-500" />
+                Freshly prepared with carefully selected coffee beans.
+              </p>
+            </div>
+          </section>
+      </article>
+    </main>
+  );
 };
 
 export default Product;
