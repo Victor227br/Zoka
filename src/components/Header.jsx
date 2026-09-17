@@ -1,5 +1,6 @@
 import shoppingCartIcon from "../assets/icon/icon_shoppingCart-white.png";
 import profileIcon from "../assets/icon/icon_profile.png";
+import { Link } from "react-router-dom";
 
 const Header = () => {
     return(
@@ -14,13 +15,16 @@ const Header = () => {
         
         <h1 className="ml-6 text-[clamp(1.5rem,1.5vw,2.3rem)] text-white lg:ml-16">Zoka</h1>
           <div className=" flex items-center justify-around w-24 mr-8 lg:mr-16">
-            <div className="relative flex items-center justify-center cursor-pointer">
+            <Link
+              to="/cart"
+              aria-label="Open shopping cart"
+              className="relative flex items-center justify-center cursor-pointer">
               <div className="absolute -top-2 -right-2 flex items-center justify-center w-5 h-5 rounded-full bg-white">
                 <p className="text-xs text-[#0344DC]">2</p>
               </div>
 
-                <img className="h-7 cursor-pointer" src={shoppingCartIcon}/>
-              </div>
+                <img className="h-7 cursor-pointer" src={shoppingCartIcon} alt=""/>
+              </Link>
                 <div className="cursor-pointer">
                     <img className="h-9" src={profileIcon} alt="Profile"/>
                 </div>
