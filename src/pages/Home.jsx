@@ -1,6 +1,6 @@
 import MenuCategories from "../components/MenuCategories";
 import { Carousel } from "../components/carouselHome";
-import  Header  from "../components/Header";
+import Hero from "../components/Hero";
 
 const Home = () => {
   let slides = [
@@ -12,93 +12,8 @@ const Home = () => {
     
   return (
     <>
-  <section
-    className="
-    relative
-    w-full
-    min-h-screen
-    bg-[url('/src/assets/picture/hero_zoka_mobile.png')]
-    lg:bg-[url('/src/assets/picture/hero_zoka_desktop-img.png')]
-    bg-cover
-    bg-no-repeat
-    bg-[50%_10%]
-    lg:bg-center">
-
-  <Header/>
-
-<div
-  className="
-    flex
-    flex-col
-    items-center
-    justify-center
-    w-full
-    min-h-screen
-    bg-gradient-to-t
-    from-black/90
-    via-black/20
-    to-transparent
-    pb-[70%]
-    bg-blend-multiply
-    lg:items-start
-    lg:justify-center
-    lg:pb-[10%]
-    lg:pl-[10%]">
-      
-  <div
-    className="
-      w-[90%]
-      max-w-md
-      flex
-      flex-col
-      text-center
-      items-center
-      lg:max-w-none
-      lg:w-[42%]
-      lg:items-start
-      lg:text-left">
-        
-  <h1 className="text-white font-light leading-none text-[clamp(3.5rem,6vw,6.5rem)]">Zoka</h1>
-    <div className="mt-6 leading-[0.95]">
-      <h2 className="text-white font-medium text-[clamp(2rem,3.4vw,4rem)]">Strong <span className="text-blue-500 font-medium">Coffee</span></h2>
-      <h2 className="text-white lg:font-thin lg:tracking-wide lg:font-extralight text-[clamp(2rem,3.4vw,4rem)]">Clean <span className="text-blue-500 ">Experience</span></h2>
-     
-      <div className="flex items-center  mr-6 ml-6 lg:m-0">
-      <p className="text-white mt-6 lg:ml-1">Freshly roasted specialty coffee with bold flavor and unforgettable aroma.</p>
-      </div>
-
-    </div>
-
-    <button
-      className="
-        mt-8
-        flex
-        items-center
-        justify-center
-        w-[60%]
-        bg-[#0344DC]
-        text-white
-        h-8
-        rounded-2xl
-        shadow-lg
-        shadow-[0_0_35px_rgba(3,68,220,0.45)]
-        duration-300
-        hover:scale-105
-        hover:bg-white/30
-        hover:text-white
-        lg:w-[46%]
-        lg:h-[4.7vh]
-        lg:text-[1.2vw]
-        lg:bg-white
-        lg:text-[#0344DC]">
-      Explore Menu 
-    </button>
-    
-  </div>
-</div>
-
-</section>
-   <div className="flex flex-col items-center justify-center mt-20 px-6">
+      <Hero />
+   <div id="story" className="flex flex-col items-center justify-center mt-20 px-6 scroll-mt-24">
   <p
     className="
       max-w-4xl
@@ -140,7 +55,9 @@ const Home = () => {
 </div>
       {/* <nav className=" h-[8vh] sticky top-0 z-50 -mt-6 bg-white w-[92%] mx-auto rounded-2xl shadow-lg p-4"></nav> */}
   </section>
-          <MenuCategories />
+          <div id="products" className="scroll-mt-24">
+            <MenuCategories />
+          </div>
 
     <footer className="bg-[#0F172A] text-white mt-20">
       <section className="max-w-7xl mx-auto px-6 py-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
