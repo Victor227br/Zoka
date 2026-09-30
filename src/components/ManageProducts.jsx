@@ -3,6 +3,13 @@ import FormProduct from "./FormProduct"
 import { useContext } from "react";
 import { ProductsContext } from "../context/ProductsContext";
 import { useProductsFilters } from "../hooks/useProductsFilters";
+import {
+  IoChevronDown,
+  IoClose,
+  IoFunnelOutline,
+  IoRefreshOutline,
+  IoSearchOutline,
+} from "react-icons/io5";
 
 const ManageProducts = () => {
   const {isFormOpen ,openForm} = useContext(ProductsContext)
@@ -11,11 +18,13 @@ const ManageProducts = () => {
    search,
    category, 
    status,
+   categories,
    filteredProducts,
+   hasActiveFilters,
    clearFilter,
    totalProducts,
    totalStock,
-   totalProductsInative,
+   totalInactiveProducts,
    setSearch,
    setCategory,
    setStatus,
@@ -105,8 +114,8 @@ const ManageProducts = () => {
     </div>
     <div className="flex flex-col items-center">
       <p className="text-gray-500 text-sm">Total Products</p>
-      <h3 className="text-2xl font-bold text-slate-800">{totalProducts()}</h3>
-      <p className="text-[#0344DC] text-sm">Active</p>
+      <h3 className="text-2xl font-bold text-slate-800">{totalProducts}</h3>
+      <p className="text-[#0344DC] text-sm">Registered</p>
     </div>
   </div>
 
@@ -141,7 +150,7 @@ const ManageProducts = () => {
 
     <div className="flex flex-col items-center">
       <p className="text-gray-500 text-sm">Stock</p>
-      <h3 className="text-2xl font-bold text-slate-800">{totalStock()}</h3>
+      <h3 className="text-2xl font-bold text-slate-800">{totalStock}</h3>
       <p className="text-[#0344DC] text-sm">Units</p>
     </div>
   </div>
@@ -177,7 +186,7 @@ const ManageProducts = () => {
 
     <div className="flex flex-col items-center">
       <p className="text-gray-500 text-sm">Categories</p>
-      <h3 className="text-2xl font-bold text-slate-800">3</h3>
+      <h3 className="text-2xl font-bold text-slate-800">{categories.length}</h3>
       <p className="text-[#0344DC] text-sm">Registered</p>
     </div>
   </div>
@@ -213,87 +222,154 @@ const ManageProducts = () => {
 
     <div className="flex flex-col items-center">
       <p className="text-gray-500 text-sm">Inactive Products</p>
-      <h3 className="text-2xl font-bold text-slate-800">{totalProductsInative()}</h3>
+      <h3 className="text-2xl font-bold text-slate-800">{totalInactiveProducts}</h3>
       <p className="text-red-500 text-sm">Inactive</p>
     </div>
   </div>
 </section>
 
-<section className="flex flex-col gap-3 p-4">
-  <input
-    type="text"
-    value={search}
-    onChange={(e) => setSearch(e.target.value)}
-    placeholder="Find products..."
-    className="
-      w-full
-      h-12
-      px-4
-      rounded-xl
-      border
-      border-slate-200
-      bg-white
-      outline-none
-      focus:border-[#0344DC]
-      focus:ring-1
-      focus:ring-[#0344DC]"/>
+<section className="m-4 overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-[0_12px_35px_rgba(29,53,87,0.06)]">
+  <div className="flex flex-col gap-3 border-b border-slate-100 bg-gradient-to-r from-[#F8FAFF] to-white px-5 py-4 sm:flex-row sm:items-center sm:justify-between lg:px-6">
+    <div className="flex items-center gap-3">
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#E9F0FF] text-xl text-[#0344DC]">
+        <IoFunnelOutline />
+      </span>
+      <div>
+        <h2 className="font-bold text-[#1D3557]">Filter products</h2>
+        <p className="text-sm text-slate-500">
+          Search and refine your product list
+        </p>
+      </div>
+    </div>
 
-  <div className="grid grid-cols-2 gap-3">
-
-  <select
-    value={category}
-      onChange={(e) => setCategory(e.target.value)}
-      className="
-        h-12
-        px-3
-        rounded-xl
-        border
-        border-slate-200
-        bg-white
-        text-slate-700">
-      <option value={"All"}>All Categories</option>
-      <option value={"Hot Drink"}>Hot Drink</option>
-      <option value={"Cold Drink"}>Cold Drink</option>
-      <option value={"Special Drink"}>Special Drink</option>
-      <option value={"Package"}>Package</option>
-  </select>
-
-  <select
-    value={status}
-    onChange={(e) => setStatus(e.target.value)}
-      className="
-        h-12
-        px-3
-        rounded-xl
-        border
-        border-slate-200
-        bg-white
-        text-slate-700">
-      <option value={"All"}>Status: All</option>
-      <option value={"Active"}>Active</option>
-      <option value={"Inactive"}>Inactive</option>
-    </select>
+    <span className="w-fit rounded-full bg-[#E9F0FF] px-3 py-1.5 text-xs font-bold text-[#0344DC]">
+      {filteredProducts.length} {filteredProducts.length === 1 ? "result" : "results"}
+    </span>
   </div>
 
-  <button
-  onClick={clearFilter}
-    className="
-      flex
-      items-center
-      justify-center
-      gap-2
-      h-12
-      rounded-xl
-      border
-      border-slate-200
-      bg-white
-      text-slate-700
-      hover:bg-slate-50
-      transition">
-    Clear filter
-  </button>
-</section>
+  <div className="grid gap-4 p-5 lg:grid-cols-[minmax(280px,1fr)_220px_190px_auto] lg:items-end lg:p-6">
+    <div>
+      <label
+        htmlFor="product-search"
+        className="mb-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500"
+      >
+        Search
+      </label>
+      <div className="group relative">
+        <IoSearchOutline className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-xl text-slate-400 transition group-focus-within:text-[#0344DC]" />
+        <input
+          id="product-search"
+          type="text"
+          role="searchbox"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search by name, type or description..."
+          className="h-12 w-full rounded-xl border border-slate-200 bg-[#F8FAFD] pl-12 pr-11 text-sm text-[#1D3557] outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-[#0344DC] focus:bg-white focus:ring-4 focus:ring-blue-100"
+        />
+        {search && (
+          <button
+            type="button"
+            onClick={() => setSearch("")}
+            aria-label="Clear search"
+            className="absolute right-3 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-200 hover:text-[#1D3557]"
+          >
+            <IoClose />
+          </button>
+        )}
+      </div>
+    </div>
 
+    <div>
+      <label
+        htmlFor="product-category"
+        className="mb-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500"
+      >
+        Category
+      </label>
+      <div className="relative">
+        <select
+          id="product-category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="h-12 w-full appearance-none rounded-xl border border-slate-200 bg-[#F8FAFD] px-4 pr-10 text-sm font-medium text-[#1D3557] outline-none transition hover:border-slate-300 focus:border-[#0344DC] focus:bg-white focus:ring-4 focus:ring-blue-100"
+        >
+          <option value="All">All categories</option>
+          {categories.map((productCategory) => (
+            <option key={productCategory} value={productCategory}>
+              {productCategory}
+            </option>
+          ))}
+        </select>
+        <IoChevronDown className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" />
+      </div>
+    </div>
+
+    <div>
+      <label
+        htmlFor="product-status"
+        className="mb-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500"
+      >
+        Status
+      </label>
+      <div className="relative">
+        <select
+          id="product-status"
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+          className="h-12 w-full appearance-none rounded-xl border border-slate-200 bg-[#F8FAFD] px-4 pr-10 text-sm font-medium text-[#1D3557] outline-none transition hover:border-slate-300 focus:border-[#0344DC] focus:bg-white focus:ring-4 focus:ring-blue-100"
+        >
+          <option value="All">All statuses</option>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+        <IoChevronDown className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" />
+      </div>
+    </div>
+
+    <button
+      type="button"
+      onClick={clearFilter}
+      disabled={!hasActiveFilters}
+      className="flex h-12 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-600 transition hover:border-[#0344DC]/30 hover:bg-[#F4F7FC] hover:text-[#0344DC] disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-300 lg:min-w-36"
+    >
+      <IoRefreshOutline className="text-lg" />
+      Clear filters
+    </button>
+  </div>
+
+  {hasActiveFilters && (
+    <div className="flex flex-wrap items-center gap-2 border-t border-slate-100 bg-[#FBFCFF] px-5 py-3 text-xs lg:px-6">
+      <span className="mr-1 font-semibold text-slate-400">Active filters:</span>
+      {search && (
+        <button
+          type="button"
+          onClick={() => setSearch("")}
+          className="inline-flex items-center gap-1.5 rounded-full bg-[#E9F0FF] px-3 py-1.5 font-semibold text-[#0344DC] transition hover:bg-[#DCE8FF]"
+        >
+          “{search}” <IoClose />
+        </button>
+      )}
+      {category !== "All" && (
+        <button
+          type="button"
+          onClick={() => setCategory("All")}
+          className="inline-flex items-center gap-1.5 rounded-full bg-[#E9F0FF] px-3 py-1.5 font-semibold text-[#0344DC] transition hover:bg-[#DCE8FF]"
+        >
+          {category} <IoClose />
+        </button>
+      )}
+      {status !== "All" && (
+        <button
+          type="button"
+          onClick={() => setStatus("All")}
+          className="inline-flex items-center gap-1.5 rounded-full bg-[#E9F0FF] px-3 py-1.5 font-semibold text-[#0344DC] transition hover:bg-[#DCE8FF]"
+        >
+          {status} <IoClose />
+        </button>
+      )}
+    </div>
+  )}
+</section>
 <section>
   {
     filteredProducts.map((product) =>{
