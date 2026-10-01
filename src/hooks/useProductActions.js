@@ -1,6 +1,5 @@
-import { useState, useEffect, useReducer, createContext} from "react";
+import { useState, useEffect} from "react";
 import { getItem, setItem } from "../services/ProductService";
-import FormProduct from "../components/FormProduct";
 
 export const useProductsActions = () => {
   const [isFormOpen, setIsFormOpen ] = useState(false)
