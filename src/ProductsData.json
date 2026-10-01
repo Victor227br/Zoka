@@ -107,5 +107,71 @@
     "status": "Active",
     "description": "Vanilla ice cream topped with a shot of hot espresso.",
     "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvM2FfKm24gsaH8nQ1-tGWDxMVRqs5oWbZUgOcCjslNA&s=10"
+  },
+
+  {
+    "id": 116,
+    "name": "Zoka Classic Beans",
+    "price": 34.9,
+    "stock": 24,
+    "type": "Package",
+    "status": "Active",
+    "description": "Balanced 250g whole-bean coffee with notes of caramel, chocolate, and toasted nuts.",
+    "img": ""
+  },
+
+  {
+    "id": 228,
+    "name": "Zoka Intense Roast",
+    "price": 39.9,
+    "stock": 18,
+    "type": "Package",
+    "status": "Active",
+    "description": "Full-bodied 250g dark roast with a bold aroma and a long cocoa finish.",
+    "img": ""
+  },
+
+  {
+    "id": 339,
+    "name": "Zoka Decaf Beans",
+    "price": 42.9,
+    "stock": 10,
+    "type": "Package",
+    "status": "Active",
+    "description": "Smooth 250g decaffeinated whole-bean coffee with a sweet and balanced profile.",
+    "img": ""
+  },
+
+  {
+    "id": 447,
+    "name": "Flat White",
+    "price": 16.9,
+    "stock": 21,
+    "type": "Hot Drink",
+    "status": "Active",
+    "description": "Double espresso finished with silky steamed milk and a thin layer of microfoam.",
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY-WtFpTlpp6wQsXTRYQ0jlL1EoRMqIWgPpT5bO7SE6A&s=10"
+  },
+
+  {
+    "id": 558,
+    "name": "Espresso Tonic",
+    "price": 19.5,
+    "stock": 14,
+    "type": "Cold Drink",
+    "status": "Active",
+    "description": "A bright espresso poured over tonic water and ice for a refreshing finish.",
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThCDUcRe5QOEiuhNr-XgPSczdGFYwwnRiywbw-ChJXWQ&s=10"
+  },
+
+  {
+    "id": 669,
+    "name": "Cinnamon Mocha",
+    "price": 21.5,
+    "stock": 16,
+    "type": "Special Drink",
+    "status": "Active",
+    "description": "Chocolate espresso with steamed milk, cinnamon, and a smooth whipped topping.",
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRo_MPyzlbxWPsLuwr7m0Ml8q1fmKf9ORx60C1tVL0xrg&s=10"
   }
 ]
