@@ -1,6 +1,7 @@
 import { useFormProduct } from "../hooks/useFormProduct"
 import { ProductsContext } from "../context/ProductsContext"
 import { useContext } from "react"
+import coffeePackageImage from "../assets/picture/coffee_package.png"
 
 const FormProduct = () => {
   const {formData, textValueButton, validForm ,setFormData, handleSubmit} = useFormProduct()  
@@ -100,7 +101,14 @@ const FormProduct = () => {
       <label className="block text-sm font-medium text-slate-700 mb-2">Product Type</label>
       <select
       value={formData.type}
-      onChange={(e) => setFormData({...formData, type: e.target.value})}
+      onChange={(e) => {
+        const selectedType = e.target.value
+        setFormData({
+          ...formData,
+          type: selectedType,
+          img: selectedType === "Package" ? "" : formData.img,
+        })
+      }}
         className="
           w-full
           p-3
@@ -139,22 +147,36 @@ const FormProduct = () => {
 
     <div>
       <label className="block text-sm font-medium text-slate-700 mb-2">Product Image</label>
-      {formData.type !== "Package" &&(
-       <input
-        type="url"
-        placeholder="https://exemplo.com"
-        value={formData.img}
-        onChange={(e) => setFormData({...formData, img: e.target.value})}
-        className=" 
-          w-full
-          p-3
-          rounded-xl
-          border
-          border-slate-200
-          resize-none
-          outline-none
-          focus:border-[#0344DC]"/>
-      )} 
+      {formData.type === "Package" ? (
+        <div className="flex items-center gap-4 rounded-xl border border-blue-100 bg-[#F4F7FC] p-3">
+          <img
+            src={coffeePackageImage}
+            alt="Default Zoka coffee package"
+            className="h-20 w-20 rounded-lg object-cover"
+          />
+          <div>
+            <p className="font-semibold text-[#1D3557]">Zoka package image</p>
+            <p className="mt-1 text-sm leading-5 text-slate-500">
+              Package products automatically use the official coffee package image.
+            </p>
+          </div>
+        </div>
+      ) : (
+        <input
+          type="url"
+          placeholder="https://exemplo.com"
+          value={formData.img}
+          onChange={(e) => setFormData({...formData, img: e.target.value})}
+          className="
+            w-full
+            p-3
+            rounded-xl
+            border
+            border-slate-200
+            resize-none
+            outline-none
+            focus:border-[#0344DC]"/>
+      )}
     </div>
 
     <div>

@@ -1,9 +1,8 @@
 import { useState, useEffect, useContext } from "react"
 import { ProductsContext } from "../context/ProductsContext"
-import coffeePackage from "../assets/picture/coffee_package.png";
 
 export const useFormProduct = () => {
-  const {editingProduct, products ,addProduct, editProduct, closeForm} = useContext(ProductsContext)
+  const {editingProduct, addProduct, editProduct, closeForm} = useContext(ProductsContext)
 
   const inicialValue = {
     id: new Date().getTime().toString(),
@@ -29,9 +28,10 @@ export const useFormProduct = () => {
   const validForm = 
     !formData.name.trim() ||
     !formData.description.trim() ||
-    !formData.img.trim() ||
+    (formData.type !== "Package" && !formData.img.trim()) ||
     !formData.price ||
     !formData.stock
+
 
   const handleSubmit = (event) => {
     event.preventDefault() 
