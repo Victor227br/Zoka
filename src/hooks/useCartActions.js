@@ -1,15 +1,58 @@
 import { useState, useEffect } from "react"
+import { getCart } from "../services/CartService"
+import { saveCart } from "../services/CartService"
 
 export const useCartActions = () => {
 
+ const [cart, setCart] = useState(getCart())
 
+ const addItemCart = (product) => {
+    return setCart([...cart, product])
+ }
 
-//Quando comprar remover a quantidade de itens do produto que foi comprado
-// Salvar os produtos que estao no carriho (No objeto )
-// botao para remover o produto do carrinho 
-//Calcular o preco dos itens que estao no carrinho 
-//Dar desconto na primeira compra??
-//Aparecer os produtos no carrinho
-// Aumentar a quantidade de icones que tem no carrinho
-//fazer a pagina de dashboard, e a pagina de ordes no admin
+ useEffect(() => {
+    saveCart(cart)
+   },[cart])
+ 
+ const buyProduct = (product) => {
+    console.log("Compra realizada com sucesso!", product)
+} 
+
+ const removeItemCart = (id, size) =>  {
+    const removeProduct = cart.filter(product => product.id !== id && product.size !== size)
+    setCart(removeProduct)
+}
+
+ const increaseQuantity = (id, size) => {
+  const updatedCart = cart.map(product => {
+     if(product.id === id && product.size === size) {
+        return {...product, quantity: product.quantity + 1}
+        }
+     else {
+        return product
+    }
+})
+    setCart(updatedCart)
+ }
+
+ const decreaseQuantity = (id, size) => {
+    const updatedCart = cart.map(product => {
+        if(product.id === id && product.size === size) {
+            return {...product, quantity: product.quantity - 1}
+        }
+        else {
+            return product
+        }
+    })
+    setCart(updatedCart)
+ }
+ 
+return{
+    addItemCart,
+    buyProduct,
+    removeItemCart,
+    increaseQuantity,
+    decreaseQuantity,
+    cart,
+}
 }
