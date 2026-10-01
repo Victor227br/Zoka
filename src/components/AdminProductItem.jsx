@@ -1,10 +1,11 @@
 import { ProductsContext } from "../context/ProductsContext";
-import { useProductsFilters } from "../hooks/useProductsFilters";
 import { useContext } from "react";
+import coffeePackageImage from "../assets/picture/coffee_package.png";
 
 const AdminProductItem = ({product, openForm}) => {
-  const {id, img, name, price, stock, type, status, description} = product;
+  const {id, img, name, price, stock, type, status} = product;
   const {removeProduct} = useContext(ProductsContext)
+  const productImage = type === "Package" ? coffeePackageImage : img;
 
 return (
  <div className="bg-white rounded-xl shadow-sm p-3 lg:p-4 border border-slate-100">
@@ -12,8 +13,8 @@ return (
     <div className="flex items-center gap-3 flex-1 min-w-0">
       <img
         className="h-14 w-14 rounded-xl object-cover shrink-0"
-        src={img}
-        alt=""/>
+        src={productImage}
+        alt={name}/>
 
       <div className="flex flex-col justify-center gap-1 min-w-0">
         <h3 className="font-bold text-[#1D3557] text-xs truncate">{name}</h3>
@@ -47,7 +48,7 @@ return (
           rounded-lg
           bg-[#EEF4FF]
           flex items-center justify-center
-          lg:w-10 lg:h-10">
+          lg:w-10 lg:h-10"> 
 
         <img
           className="h-7"
@@ -68,6 +69,7 @@ return (
           src="/src/assets/icon/icon_trash.png"
           alt=""/>
       </button>
+      
     </div>
   </div>
 </div>

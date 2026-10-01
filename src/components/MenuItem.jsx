@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
+import coffeePackageImage from "../assets/picture/coffee_package.png";
 
 const MenuItem = ({product}) => {
-  const {id, name, img, price, stock, type, status, description} = product;
+  const {id, name, img, price, type, description} = product;
+  const productImage = type === "Package" ? coffeePackageImage : img;
 
 return(
    <Link to={`/product/${id}`}>
@@ -37,8 +39,8 @@ return(
       hover:scale-105
       duration-300
     "
-    src={img}
-    alt=""
+    src={productImage}
+    alt={name}
   />
 </div>
 

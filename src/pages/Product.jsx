@@ -103,7 +103,11 @@ export const Product = () => {
 
             <figure className="relative z-[1] aspect-square w-full max-w-[600px] overflow-hidden rounded-[30px] bg-white shadow-[0_28px_70px_rgba(29,53,87,0.16)] sm:rounded-[40px]">
               <img
-                src={product.img || fallbackProductImage}
+                src={
+                  product.type === "Package"
+                    ? fallbackProductImage
+                    : product.img || fallbackProductImage
+                }
                 alt={product.name}
                 onError={handleImageError}
                 className="h-full w-full object-cover transition duration-700 hover:scale-[1.03]"
