@@ -8,6 +8,8 @@ const CartItem = ({
   unitPrice,
   totalPrice,
   quantity,
+  canIncrease,
+  canDecrease,
   onIncrease,
   onDecrease,
   onRemove,
@@ -61,8 +63,9 @@ const CartItem = ({
               <button
                 type="button"
                 onClick={onDecrease}
+                disabled={!canDecrease}
                 aria-label={`Decrease ${name} quantity`}
-                className="flex h-8 w-8 items-center justify-center rounded-lg text-sm text-[#1D3557] transition hover:bg-white hover:text-[#0344DC] hover:shadow-sm sm:h-9 sm:w-9"
+                className="flex h-8 w-8 items-center justify-center rounded-lg text-sm text-[#1D3557] transition hover:bg-white hover:text-[#0344DC] hover:shadow-sm disabled:cursor-not-allowed disabled:text-slate-300 sm:h-9 sm:w-9"
               >
                 <IoRemove />
               </button>
@@ -74,8 +77,9 @@ const CartItem = ({
               <button
                 type="button"
                 onClick={onIncrease}
+                disabled={!canIncrease}
                 aria-label={`Increase ${name} quantity`}
-                className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#0344DC] text-sm text-white shadow-sm transition hover:bg-[#0238B8] sm:h-9 sm:w-9"
+                className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#0344DC] text-sm text-white shadow-sm transition hover:bg-[#0238B8] disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none sm:h-9 sm:w-9"
               >
                 <IoAdd />
               </button>
