@@ -34,26 +34,16 @@ const Home = () => {
   <div className="w-[100%] mt-4 h-px bg-gray-900 lg:w-[54%] lg:mt-6"></div>
 </div>
   
-  <section 
-    className="
-    flex 
-    flex-col 
-    ml-[4%] 
-    mr-[1%] 
-    mt-[4%] 
-    items-center
-    justify-between
-    lg:flex-row
-    lg:items-starts
-    lg: w-full">
-    <div className="lg:w-[30%] mt-[20%] md:mt-[5%] lg:mb-[5%]">
-      <h2 className="text-[clamp(1.5rem,2vw,2.4rem)] text-[#2F2F2F] font-semibold ">Discover our coffees.</h2>
-      <p className=" text-[#2F2F2F] mt-4">discover our premium coffee collection, crafted from carefully selected beans to deliver rich aroma, exceptional flavor, and an unforgettable coffee experience.</p>
+  <section className="mt-16 w-full px-6 lg:px-[4%]">
+    <div className="grid min-w-0 items-center gap-8 lg:grid-cols-[30%_minmax(0,55%)] lg:justify-between">
+      <div>
+        <h2 className="text-[clamp(1.5rem,2vw,2.4rem)] text-[#2F2F2F] font-semibold ">Discover our coffees.</h2>
+        <p className=" text-[#2F2F2F] mt-4">discover our premium coffee collection, crafted from carefully selected beans to deliver rich aroma, exceptional flavor, and an unforgettable coffee experience.</p>
+      </div>
+      <div className="min-w-0 w-full">
+        <Carousel slides={slides}/>
+      </div>
     </div>
-  <div className="lg:w-[55%] m-auto mt-[10%] md:mt-[5%] lg:mt-0">
-    <Carousel slides={slides}/>
-</div>
-      {/* <nav className=" h-[8vh] sticky top-0 z-50 -mt-6 bg-white w-[92%] mx-auto rounded-2xl shadow-lg p-4"></nav> */}
   </section>
           <div id="products" className="scroll-mt-24">
             <MenuCategories />
