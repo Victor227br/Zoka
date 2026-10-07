@@ -1,43 +1,53 @@
+import { useContext, useState } from "react";
 import {
   IoArrowBack,
   IoBagCheckOutline,
+  IoBagHandleOutline,
   IoCardOutline,
   IoShieldCheckmarkOutline,
-  IoTicketOutline,
+  IoTrashOutline,
 } from "react-icons/io5";
 
-import cappuccinoImage from "../assets/picture/cappuccino.jpg";
-import coffeePackageImage from "../assets/picture/coffee_package-carousel.png";
+import fallbackProductImage from "../assets/picture/coffee_package.png";
 import CartItem from "../components/CartItem";
 import Header from "../components/Header";
+import { CartContext } from "../context/CartContext";
+import { ProductsContext } from "../context/ProductsContext";
 import { useBackNavigation } from "../hooks/useBackNavigation";
 
-// Temporary visual data. Replace it with the cart state when its logic is ready.
-const previewCartItems = [
-  {
-    id: "preview-cappuccino",
-    image: cappuccinoImage,
-    name: "Cappuccino",
-    type: "Hot Drink",
-    size: "180ml",
-    unitPrice: "R$ 14,90",
-    totalPrice: "R$ 29,80",
-    quantity: 2,
-  },
-  {
-    id: "preview-coffee-package",
-    image: coffeePackageImage,
-    name: "Zoka Coffee Beans",
-    type: "Package",
-    size: "500g",
-    unitPrice: "R$ 32,90",
-    totalPrice: "R$ 32,90",
-    quantity: 1,
-  },
-];
+const formatPrice = (price) =>
+  new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(price);
 
 const Cart = () => {
   const goBack = useBackNavigation();
+  const {
+    cart,
+    cartQuantity,
+    cartSubtotal,
+    buyProduct,
+    removeItemCart,
+    increaseQuantity,
+    decreaseQuantity,
+    clearCart,
+  } = useContext(CartContext);
+  const {purchaseProducts} = useContext(ProductsContext);
+  const [purchaseMessage, setPurchaseMessage] = useState("");
+  const [purchaseError, setPurchaseError] = useState(false);
+
+  const handleCheckout = () => {
+    const purchaseCompleted = buyProduct(purchaseProducts);
+
+    if (purchaseCompleted) {
+      setPurchaseMessage("Purchase completed successfully. Your cart is now empty.");
+      setPurchaseError(false);
+    } else {
+      setPurchaseMessage("Some product no longer has enough stock. Review your cart and try again.");
+      setPurchaseError(true);
+    }
+  };
 
   return (
     <main className="min-h-screen bg-[#F4F7FC] text-[#1D3557]">
@@ -70,33 +80,78 @@ const Cart = () => {
 
           <div className="inline-flex w-fit items-center gap-2 rounded-full bg-[#E9F0FF] px-4 py-2 text-sm font-bold text-[#0344DC]">
             <IoBagCheckOutline className="text-lg" />
-            3 items
+            {cartQuantity} {cartQuantity === 1 ? "item" : "items"}
           </div>
         </header>
 
         <div className="mt-8 grid min-w-0 grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_400px] xl:gap-12">
           <section className="min-w-0" aria-labelledby="cart-items-title">
-            <div className="mb-4 flex items-center justify-between px-1">
-              <h2 id="cart-items-title" className="text-lg font-bold">
-                Your items
-              </h2>
-              <span className="text-sm font-medium text-slate-400">
-                2 products
-              </span>
+            <div className="mb-4 flex items-center justify-between gap-4 px-1">
+              <div>
+                <h2 id="cart-items-title" className="text-lg font-bold">
+                  Your items
+                </h2>
+                <span className="text-sm font-medium text-slate-400">
+                  {cart.length} {cart.length === 1 ? "product" : "products"}
+                </span>
+              </div>
+
+              {cart.length > 0 && (
+                <button
+                  type="button"
+                  onClick={clearCart}
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 transition hover:text-red-500"
+                >
+                  <IoTrashOutline />
+                  Clear cart
+                </button>
+              )}
             </div>
 
-            <div className="space-y-4">
-              {previewCartItems.map((item) => (
-                <CartItem key={item.id} {...item} />
-              ))}
-            </div>
+            {cart.length > 0 ? (
+              <div className="space-y-4">
+                {cart.map((item) => {
+                  const quantityForProduct = cart
+                    .filter((cartItem) => cartItem.id === item.id)
+                    .reduce((total, cartItem) => total + cartItem.quantity, 0);
 
-            <div className="mt-6 flex items-start gap-3 rounded-2xl border border-blue-100 bg-[#EDF3FF] p-4 text-sm text-[#1D3557] sm:items-center">
-              <IoShieldCheckmarkOutline className="mt-0.5 shrink-0 text-xl text-[#0344DC] sm:mt-0" />
-              <p>
-                Your items are reserved while you finish your order.
-              </p>
-            </div>
+                  return (
+                    <CartItem
+                      key={`${item.id}-${item.size}`}
+                      image={item.image || fallbackProductImage}
+                      name={item.name}
+                      type={item.type}
+                      size={item.size}
+                      unitPrice={formatPrice(item.price)}
+                      totalPrice={formatPrice(item.price * item.quantity)}
+                      quantity={item.quantity}
+                      canIncrease={quantityForProduct < Number(item.stock)}
+                      canDecrease={item.quantity > 1}
+                      onIncrease={() => increaseQuantity(item.id, item.size)}
+                      onDecrease={() => decreaseQuantity(item.id, item.size)}
+                      onRemove={() => removeItemCart(item.id, item.size)}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="flex min-h-72 flex-col items-center justify-center rounded-[26px] border border-dashed border-slate-300 bg-white px-6 text-center">
+                <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#E9F0FF] text-3xl text-[#0344DC]">
+                  <IoBagHandleOutline />
+                </span>
+                <h2 className="mt-5 text-2xl font-bold">Your cart is empty</h2>
+                <p className="mt-2 max-w-md text-sm leading-6 text-slate-500">
+                  Choose a coffee from our catalog and it will appear here.
+                </p>
+              </div>
+            )}
+
+            {cart.length > 0 && (
+              <div className="mt-6 flex items-start gap-3 rounded-2xl border border-blue-100 bg-[#EDF3FF] p-4 text-sm text-[#1D3557] sm:items-center">
+                <IoShieldCheckmarkOutline className="mt-0.5 shrink-0 text-xl text-[#0344DC] sm:mt-0" />
+                <p>Your items are saved in this browser until you finish your order.</p>
+              </div>
+            )}
           </section>
 
           <aside className="min-w-0 rounded-[28px] bg-[#1D3557] p-6 text-white shadow-[0_24px_55px_rgba(29,53,87,0.18)] sm:p-8 lg:sticky lg:top-8">
@@ -115,7 +170,9 @@ const Cart = () => {
             <div className="mt-7 space-y-4 border-y border-white/10 py-6 text-sm">
               <div className="flex justify-between gap-4 text-slate-300">
                 <span>Subtotal</span>
-                <strong className="font-semibold text-white">R$ 62,70</strong>
+                <strong className="font-semibold text-white">
+                  {formatPrice(cartSubtotal)}
+                </strong>
               </div>
               <div className="flex justify-between gap-4 text-slate-300">
                 <span>Delivery</span>
@@ -123,7 +180,9 @@ const Cart = () => {
               </div>
               <div className="flex justify-between gap-4 text-slate-300">
                 <span>Discount</span>
-                <strong className="font-semibold text-white">R$ 0,00</strong>
+                <strong className="font-semibold text-white">
+                  {formatPrice(0)}
+                </strong>
               </div>
             </div>
 
@@ -132,45 +191,29 @@ const Cart = () => {
                 <p className="text-sm text-slate-300">Total</p>
                 <p className="mt-1 text-xs text-slate-400">Taxes included</p>
               </div>
-              <p className="text-3xl font-bold tracking-[-0.03em]">R$ 62,70</p>
-            </div>
-
-            <div className="mt-7">
-              <label
-                htmlFor="coupon"
-                className="mb-2 block text-xs font-semibold text-slate-300"
-              >
-                Discount code
-              </label>
-              <div className="flex rounded-2xl bg-white/10 p-1.5 ring-1 ring-white/10 focus-within:ring-blue-300">
-                <div className="flex flex-1 items-center gap-2 px-3">
-                  <IoTicketOutline className="shrink-0 text-lg text-blue-200" />
-                  <input
-                    id="coupon"
-                    type="text"
-                    placeholder="Enter your code"
-                    className="min-w-0 flex-1 bg-transparent py-2 text-sm text-white outline-none placeholder:text-slate-400"
-                  />
-                </div>
-                <button
-                  type="button"
-                  className="rounded-xl bg-white px-4 text-sm font-bold text-[#1D3557] transition hover:bg-blue-50"
-                >
-                  Apply
-                </button>
-              </div>
+              <p className="text-3xl font-bold tracking-[-0.03em]">
+                {formatPrice(cartSubtotal)}
+              </p>
             </div>
 
             <button
               type="button"
-              className="mt-6 flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-[#0344DC] px-6 font-bold text-white shadow-[0_14px_30px_rgba(3,68,220,0.3)] transition hover:-translate-y-0.5 hover:bg-[#1455E7]"
+              onClick={handleCheckout}
+              disabled={cart.length === 0}
+              className="mt-7 flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-[#0344DC] px-6 font-bold text-white shadow-[0_14px_30px_rgba(3,68,220,0.3)] transition hover:-translate-y-0.5 hover:bg-[#1455E7] disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-slate-400 disabled:shadow-none"
             >
-              Proceed to checkout
+              Complete purchase
               <span aria-hidden="true">→</span>
             </button>
 
+            {purchaseMessage && (
+              <p className={`mt-4 text-center text-sm leading-5 ${purchaseError ? "text-red-300" : "text-emerald-300"}`}>
+                {purchaseMessage}
+              </p>
+            )}
+
             <p className="mt-4 text-center text-xs leading-5 text-slate-400">
-              Secure checkout. No payment will be processed yet.
+              This demonstration does not process a real payment.
             </p>
           </aside>
         </div>
