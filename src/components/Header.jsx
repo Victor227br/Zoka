@@ -1,35 +1,43 @@
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 import shoppingCartIcon from "../assets/icon/icon_shoppingCart-white.png";
 import profileIcon from "../assets/icon/icon_profile.png";
-import { Link } from "react-router-dom";
+import { CartContext } from "../context/CartContext";
 
 const Header = () => {
-    return(
-      <header 
-      className=" 
-      flex 
-      items-center 
-      justify-between 
-      h-[9vh] 
-      bg-[#0344DC]
-      border-white/10">
-        
-        <h1 className="ml-6 text-[clamp(1.5rem,1.5vw,2.3rem)] text-white lg:ml-16">Zoka</h1>
-          <div className=" flex items-center justify-around w-24 mr-8 lg:mr-16">
-            <Link
-              to="/cart"
-              aria-label="Open shopping cart"
-              className="relative flex items-center justify-center cursor-pointer">
-              <div className="absolute -top-2 -right-2 flex items-center justify-center w-5 h-5 rounded-full bg-white">
-                <p className="text-xs text-[#0344DC]">2</p>
-              </div>
+  const {cartQuantity} = useContext(CartContext);
 
-                <img className="h-7 cursor-pointer" src={shoppingCartIcon} alt=""/>
-              </Link>
-                <div className="cursor-pointer">
-                    <img className="h-9" src={profileIcon} alt="Profile"/>
-                </div>
-            </div>
-        </header>
-)}
+  return (
+    <header className="flex h-[9vh] items-center justify-between border-white/10 bg-[#0344DC]">
+      <Link
+        to="/"
+        className="ml-6 text-[clamp(1.5rem,1.5vw,2.3rem)] text-white lg:ml-16">
+        Zoka
+      </Link>
 
- export default Header
+      <div className="mr-8 flex w-24 items-center justify-around lg:mr-16">
+        <Link
+          to="/cart"
+          aria-label={`Open shopping cart with ${cartQuantity} items`}
+          className="relative flex cursor-pointer items-center justify-center">
+          {cartQuantity > 0 && (
+            <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-white px-1 text-xs font-bold text-[#0344DC]">
+              {cartQuantity > 99 ? "99+" : cartQuantity}
+            </span>
+          )}
+
+          <img
+            className="h-7 cursor-pointer"
+            src={shoppingCartIcon}
+          />
+        </Link>
+
+        <div className="cursor-pointer">
+          <img className="h-9" src={profileIcon} alt="Profile"/>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default Header;
