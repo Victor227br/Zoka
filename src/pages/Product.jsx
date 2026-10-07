@@ -6,23 +6,33 @@ import {
   IoCubeOutline,
   IoFlashOutline,
 } from "react-icons/io5";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import fallbackProductImage from "../assets/picture/coffee_package.png";
 import Header from "../components/Header";
+import { CartContext } from "../context/CartContext";
 import { ProductsContext } from "../context/ProductsContext";
 import { useBackNavigation } from "../hooks/useBackNavigation";
 
-const sizes = [
+const drinkSizes = [
   { label: "Small", value: "120ml" },
   { label: "Medium", value: "180ml" },
   { label: "Large", value: "240ml" },
+];
+
+const packageSizes = [
+  { label: "Small", value: "250g" },
+  { label: "Medium", value: "500g" },
+  { label: "Large", value: "1kg" },
 ];
 
 const sizeMultiplier = {
   "120ml": 1,
   "180ml": 1.2,
   "240ml": 1.45,
+  "250g": 1,
+  "500g": 1.8,
+  "1kg": 3.2,
 };
 
 const formatPrice = (price) =>
@@ -34,16 +44,21 @@ const formatPrice = (price) =>
 export const Product = () => {
   const { id } = useParams();
   const { products } = useContext(ProductsContext);
+  const {addItemCart} = useContext(CartContext);
   const goBack = useBackNavigation();
+  const navigate = useNavigate();
 
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState("120ml");
+  const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
+  const [cartMessage, setCartMessage] = useState("");
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [id]);
 
   const product = products.find((item) => item.id.toString() === id);
+  const sizes = product?.type === "Package" ? packageSizes : drinkSizes;
+  const selectedSize = sizes[selectedSizeIndex];
 
   if (!product) {
     return (
@@ -74,8 +89,37 @@ export const Product = () => {
 
   const isAvailable =
     product.status?.toLowerCase() === "active" && Number(product.stock) > 0;
-  const finalPrice =
-    Number(product.price) * quantity * sizeMultiplier[selectedSize];
+  const unitPrice = Number(product.price) * sizeMultiplier[selectedSize.value];
+  const finalPrice = unitPrice * quantity;
+
+  const handleAddToCart = (openCart = false) => {
+    const productImage =
+      product.type === "Package"
+        ? fallbackProductImage
+        : product.img || fallbackProductImage;
+
+    const productAdded = addItemCart({
+      id: product.id,
+      name: product.name,
+      type: product.type,
+      image: productImage,
+      size: selectedSize.value,
+      price: Number(unitPrice.toFixed(2)),
+      quantity,
+      stock: Number(product.stock),
+    });
+
+    if (!productAdded) {
+      setCartMessage("The available stock for this product is already in your cart.");
+      return;
+    }
+
+    setCartMessage(product.name + " was added to your cart.");
+
+    if (openCart) {
+      navigate("/cart");
+    }
+  };
 
   const increaseQuantity = () => {
     setQuantity((currentQuantity) =>
@@ -160,24 +204,24 @@ export const Product = () => {
                     Choose yours
                   </p>
                   <h2 id="size-title" className="mt-1 text-lg font-bold">
-                    Cup size
+                    {product.type === "Package" ? "Package size" : "Cup size"}
                   </h2>
                 </div>
                 <span className="text-sm font-semibold text-slate-400">
-                  {selectedSize}
+                  {selectedSize.value}
                 </span>
               </div>
 
               <div className="mt-4 grid grid-cols-3 gap-2 sm:gap-3">
-                {sizes.map((size) => {
-                  const isSelected = selectedSize === size.value;
+                {sizes.map((size, index) => {
+                  const isSelected = selectedSize.value === size.value;
 
                   return (
                     <button
                       key={size.value}
                       type="button"
                       aria-pressed={isSelected}
-                      onClick={() => setSelectedSize(size.value)}
+                      onClick={() => setSelectedSizeIndex(index)}
                       className={`rounded-2xl border px-2 py-3.5 text-left transition sm:px-4 ${
                         isSelected
                           ? "border-[#0344DC] bg-[#0344DC] text-white shadow-[0_10px_25px_rgba(3,68,220,0.22)]"
@@ -240,6 +284,7 @@ export const Product = () => {
               <button
                 type="button"
                 disabled={!isAvailable}
+                onClick={() => handleAddToCart()}
                 className="inline-flex h-14 items-center justify-center gap-2 rounded-2xl bg-[#0344DC] px-5 font-bold text-white shadow-[0_14px_30px_rgba(3,68,220,0.25)] transition hover:-translate-y-0.5 hover:bg-[#0238B8] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:shadow-none"
               >
                 <IoBagHandleOutline className="text-xl" />
@@ -249,6 +294,7 @@ export const Product = () => {
               <button
                 type="button"
                 disabled={!isAvailable}
+                onClick={() => handleAddToCart(true)}
                 className="inline-flex h-14 items-center justify-center gap-2 rounded-2xl border border-[#0344DC] px-5 font-bold text-[#0344DC] transition hover:bg-[#E9F0FF] disabled:cursor-not-allowed disabled:border-slate-200 disabled:text-slate-300"
               >
                 <IoFlashOutline className="text-xl" />
@@ -256,6 +302,12 @@ export const Product = () => {
               </button>
             </div>
 
+
+              {cartMessage && (
+                <p className="mt-4 text-center text-sm font-medium text-[#0344DC]" aria-live="polite">
+                  {cartMessage}
+                </p>
+              )}
               <p className="mt-5 flex items-center justify-center gap-2 text-xs font-medium text-slate-400 sm:justify-start sm:text-sm">
                 <IoCheckmarkCircle className="shrink-0 text-lg text-emerald-500" />
                 Freshly prepared with carefully selected coffee beans.
