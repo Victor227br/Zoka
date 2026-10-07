@@ -41,9 +41,9 @@ const MenuCategories = () => {
           </div>
         </div>
 
-        <div className="sticky top-0 z-40 -mx-2 bg-gray-100/95 px-2 py-2 backdrop-blur-lg lg:static lg:z-auto lg:mx-0 lg:bg-transparent lg:p-0 lg:backdrop-blur-none">
-          <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-[0_8px_24px_rgba(29,53,87,0.08)] lg:gap-3 lg:p-3 lg:shadow-sm">
-            <div className="group relative min-w-0 flex-1 lg:max-w-xl">
+        <div className="sticky top-0 z-40 bg-transparent py-2 lg:static lg:z-auto lg:p-0">
+          <div className="grid grid-cols-[minmax(0,1fr)_2.5rem] gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-[0_8px_24px_rgba(29,53,87,0.08)] lg:gap-3 lg:p-3 lg:shadow-sm sm:flex sm:items-center">
+            <div className="group relative col-span-2 min-w-0 sm:flex-1 lg:max-w-xl">
               <IoSearchOutline className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-lg text-slate-400 transition group-focus-within:text-[#0344DC]" />
               <input
                 type="text"
@@ -66,7 +66,7 @@ const MenuCategories = () => {
               )}
             </div>
 
-            <div className="relative w-[132px] shrink-0 sm:w-48 lg:w-56">
+            <div className="relative min-w-0 sm:w-48 sm:shrink-0 lg:w-56">
               <IoFunnelOutline className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-base text-[#0344DC]" />
               <select
                 value={category}
