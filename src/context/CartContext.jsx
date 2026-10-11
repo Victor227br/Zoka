@@ -1,7 +1,5 @@
-import { createContext } from "react";
 import { useCartActions } from "../hooks/useCartActions";
-
-export const CartContext = createContext(null);
+import { CartContext } from "./cartContext";
 
 export const CartProvider = ({children}) => {
   const cartActions = useCartActions();

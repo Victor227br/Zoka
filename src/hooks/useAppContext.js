@@ -1,11 +1,12 @@
 import { useContext } from "react"
-import { ProductsContext } from "../context/ProductsContext"
+import { ProductsContext } from "../context/productsContext"
 
- export const useAppContext = () => {
-    const context = useContext(ProductsContext)
-    if(context === undefined){
-        throw new Error('Nao esta no contexto')
-        throw new console.error('Nao esta no contexto');
-    }
-    return context
+export const useAppContext = () => {
+  const context = useContext(ProductsContext)
+
+  if(context === null){
+    throw new Error("ProductsProvider is missing")
+  }
+
+  return context
 }

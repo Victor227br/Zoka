@@ -10,8 +10,8 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import fallbackProductImage from "../assets/picture/coffee_package.png";
 import Header from "../components/Header";
-import { CartContext } from "../context/CartContext";
-import { ProductsContext } from "../context/ProductsContext";
+import { CartContext } from "../context/cartContext";
+import { ProductsContext } from "../context/productsContext";
 import { useBackNavigation } from "../hooks/useBackNavigation";
 
 const drinkSizes = [

@@ -1,5 +1,5 @@
 import { useFormProduct } from "../hooks/useFormProduct"
-import { ProductsContext } from "../context/ProductsContext"
+import { ProductsContext } from "../context/productsContext"
 import { useContext } from "react"
 import coffeePackageImage from "../assets/picture/coffee_package.png"
 

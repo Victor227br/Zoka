@@ -1,7 +1,7 @@
 import AdminProductItem from "./AdminProductItem"
 import FormProduct from "./FormProduct"
 import { useContext } from "react";
-import { ProductsContext } from "../context/ProductsContext";
+import { ProductsContext } from "../context/productsContext";
 import { useProductsFilters } from "../hooks/useProductsFilters";
 import {
   IoChevronDown,

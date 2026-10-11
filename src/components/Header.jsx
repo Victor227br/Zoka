@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import shoppingCartIcon from "../assets/icon/icon_shoppingCart-white.png";
 import profileIcon from "../assets/icon/icon_profile.png";
-import { CartContext } from "../context/CartContext";
+import { CartContext } from "../context/cartContext";
 
 const Header = () => {
   const {cartQuantity} = useContext(CartContext);

@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { ProductsContext } from "../context/ProductsContext";
+import { ProductsContext } from "../context/productsContext";
 
 const normalizeText = (text) => {
   return String(text || "")
