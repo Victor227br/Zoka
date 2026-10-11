@@ -12,6 +12,7 @@ import fallbackProductImage from "../assets/picture/coffee_package.png";
 import CartItem from "../components/CartItem";
 import Header from "../components/Header";
 import { CartContext } from "../context/cartContext";
+import { OrdersContext } from "../context/ordersContext";
 import { ProductsContext } from "../context/productsContext";
 import { useBackNavigation } from "../hooks/useBackNavigation";
 
@@ -34,6 +35,7 @@ const Cart = () => {
     clearCart,
   } = useContext(CartContext);
   const {purchaseProducts} = useContext(ProductsContext);
+  const {addOrder} = useContext(OrdersContext);
   const [purchaseMessage, setPurchaseMessage] = useState("");
   const [purchaseError, setPurchaseError] = useState(false);
 
@@ -41,7 +43,8 @@ const Cart = () => {
     const purchaseCompleted = buyProduct(purchaseProducts);
 
     if (purchaseCompleted) {
-      setPurchaseMessage("Purchase completed successfully. Your cart is now empty.");
+      const order = addOrder(cart, cartSubtotal);
+      setPurchaseMessage(`Order ${order.id} completed successfully.`);
       setPurchaseError(false);
     } else {
       setPurchaseMessage("Some product no longer has enough stock. Review your cart and try again.");
