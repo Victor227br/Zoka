@@ -9,14 +9,14 @@ export const useProductsActions = () => {
   const openForm = (id) => {
     const findProduct = products.find(product => product.id === id)
     setEditingProduct(findProduct)
-    setIsFormOpen(true)    
+    setIsFormOpen(true)
   }
-  
+
   const closeForm = () => {
    setIsFormOpen(false)
     setEditingProduct(null);
   }
-  
+
   const addProduct = (product) => {
     return setProducts([...products, product])
   }
@@ -26,7 +26,7 @@ export const useProductsActions = () => {
   },[products])
 
   const removeProduct = (id) => {
-    const deleteProduct = products.filter(product => product.id !== id) 
+    const deleteProduct = products.filter(product => product.id !== id)
     return setProducts(deleteProduct)
   }
 
@@ -38,14 +38,8 @@ export const useProductsActions = () => {
 
   const purchaseProducts = (cartItems) => {
     const unavailableProduct = cartItems.find((cartItem) => {
-      const product = products.find(
-        (item) => item.id.toString() === cartItem.id.toString(),
-      )
-
-      const requestedQuantity = cartItems
-        .filter((item) => item.id.toString() === cartItem.id.toString())
-        .reduce((total, item) => total + item.quantity, 0)
-
+      const product = products.find((item) => item.id.toString() === cartItem.id.toString())
+      const requestedQuantity = cartItems.filter((item) => item.id.toString() === cartItem.id.toString()).reduce((total, item) => total + item.quantity, 0)
       return !product || requestedQuantity > Number(product.stock)
     })
 
@@ -61,20 +55,14 @@ export const useProductsActions = () => {
       if (purchasedQuantity === 0) {
         return product
       }
-
       const updatedStock = Number(product.stock) - purchasedQuantity
-
-      return {
-        ...product,
-        stock: updatedStock,
-        status: updatedStock === 0 ? "Inactive" : product.status,
-      }
+      return {...product,stock: updatedStock,status: updatedStock === 0 ? "Inactive" : product.status,}
     })
 
     setProducts(updatedProducts)
     return true
   }
-  
+
   return {
     products,
     editingProduct,
@@ -83,7 +71,7 @@ export const useProductsActions = () => {
     removeProduct,
     editProduct,
     purchaseProducts,
-    openForm, 
-    closeForm,  
+    openForm,
+    closeForm,
   }
 }
