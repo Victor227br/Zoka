@@ -1,4 +1,5 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 import {
   IoArrowBack,
   IoBagCheckOutline,
@@ -12,9 +13,9 @@ import fallbackProductImage from "../assets/picture/coffee_package.png";
 import CartItem from "../components/CartItem";
 import Header from "../components/Header";
 import { CartContext } from "../context/cartContext";
-import { OrdersContext } from "../context/ordersContext";
 import { ProductsContext } from "../context/productsContext";
 import { useBackNavigation } from "../hooks/useBackNavigation";
+import { getCartIssues } from "../utils/shop";
 
 const formatPrice = (price) =>
   new Intl.NumberFormat("pt-BR", {
@@ -28,29 +29,13 @@ const Cart = () => {
     cart,
     cartQuantity,
     cartSubtotal,
-    buyProduct,
     removeItemCart,
     increaseQuantity,
     decreaseQuantity,
     clearCart,
   } = useContext(CartContext);
-  const {purchaseProducts} = useContext(ProductsContext);
-  const {addOrder} = useContext(OrdersContext);
-  const [purchaseMessage, setPurchaseMessage] = useState("");
-  const [purchaseError, setPurchaseError] = useState(false);
-
-  const handleCheckout = () => {
-    const purchaseCompleted = buyProduct(purchaseProducts);
-
-    if (purchaseCompleted) {
-      const order = addOrder(cart, cartSubtotal);
-      setPurchaseMessage(`Order ${order.id} completed successfully.`);
-      setPurchaseError(false);
-    } else {
-      setPurchaseMessage("Some product no longer has enough stock. Review your cart and try again.");
-      setPurchaseError(true);
-    }
-  };
+  const {products} = useContext(ProductsContext);
+  const cartIssues = [...new Set(getCartIssues(cart, products))];
 
   return (
     <main className="min-h-screen bg-[#F4F7FC] text-[#1D3557]">
@@ -89,6 +74,7 @@ const Cart = () => {
 
         <div className="mt-8 grid min-w-0 grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_400px] xl:gap-12">
           <section className="min-w-0" aria-labelledby="cart-items-title">
+            {!!cartIssues.length && <div role="alert" className="mb-5 space-y-2 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">{cartIssues.map((issue) => <p key={issue}>{issue}</p>)}</div>}
             <div className="mb-4 flex items-center justify-between gap-4 px-1">
               <div>
                 <h2 id="cart-items-title" className="text-lg font-bold">
@@ -128,7 +114,7 @@ const Cart = () => {
                       unitPrice={formatPrice(item.price)}
                       totalPrice={formatPrice(item.price * item.quantity)}
                       quantity={item.quantity}
-                      canIncrease={quantityForProduct < Number(item.stock)}
+                      canIncrease={quantityForProduct < Number(products.find((product) => String(product.id) === String(item.id))?.stock || 0)}
                       canDecrease={item.quantity > 1}
                       onIncrease={() => increaseQuantity(item.id, item.size)}
                       onDecrease={() => decreaseQuantity(item.id, item.size)}
@@ -199,21 +185,14 @@ const Cart = () => {
               </p>
             </div>
 
-            <button
-              type="button"
-              onClick={handleCheckout}
-              disabled={cart.length === 0}
+            <Link
+              to={cart.length ? "/checkout" : "/cart"}
+              aria-disabled={cart.length === 0}
               className="mt-7 flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-[#0344DC] px-6 font-bold text-white shadow-[0_14px_30px_rgba(3,68,220,0.3)] transition hover:-translate-y-0.5 hover:bg-[#1455E7] disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-slate-400 disabled:shadow-none"
             >
-              Complete purchase
+              Continue to checkout
               <span aria-hidden="true">→</span>
-            </button>
-
-            {purchaseMessage && (
-              <p className={`mt-4 text-center text-sm leading-5 ${purchaseError ? "text-red-300" : "text-emerald-300"}`}>
-                {purchaseMessage}
-              </p>
-            )}
+            </Link>
 
             <p className="mt-4 text-center text-xs leading-5 text-slate-400">
               This demonstration does not process a real payment.

@@ -13,6 +13,7 @@ import Header from "../components/Header";
 import { CartContext } from "../context/cartContext";
 import { ProductsContext } from "../context/productsContext";
 import { useBackNavigation } from "../hooks/useBackNavigation";
+import { getUnitPrice } from "../utils/shop";
 
 const drinkSizes = [
   { label: "Small", value: "120ml" },
@@ -25,15 +26,6 @@ const packageSizes = [
   { label: "Medium", value: "500g" },
   { label: "Large", value: "1kg" },
 ];
-
-const sizeMultiplier = {
-  "120ml": 1,
-  "180ml": 1.2,
-  "240ml": 1.45,
-  "250g": 1,
-  "500g": 1.8,
-  "1kg": 3.2,
-};
 
 const formatPrice = (price) =>
   new Intl.NumberFormat("pt-BR", {
@@ -89,7 +81,7 @@ export const Product = () => {
 
   const isAvailable =
     product.status?.toLowerCase() === "active" && Number(product.stock) > 0;
-  const unitPrice = Number(product.price) * sizeMultiplier[selectedSize.value];
+  const unitPrice = getUnitPrice(product.price, selectedSize.value);
   const finalPrice = unitPrice * quantity;
 
   const handleAddToCart = (openCart = false) => {
@@ -104,13 +96,13 @@ export const Product = () => {
       type: product.type,
       image: productImage,
       size: selectedSize.value,
-      price: Number(unitPrice.toFixed(2)),
+      price: unitPrice,
       quantity,
       stock: Number(product.stock),
     });
 
     if (!productAdded) {
-      setCartMessage("The available stock for this product is already in your cart.");
+      setCartMessage("There is not enough stock for this quantity, including items already in your cart. Choose a smaller quantity.");
       return;
     }
 
@@ -279,6 +271,12 @@ export const Product = () => {
                 </div>
               </div>
             </div>
+
+            {!isAvailable && (
+              <p role="status" className="mt-4 rounded-xl bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+                {Number(product.stock) === 0 ? "This product is out of stock." : "This product is currently unavailable."} Please choose another coffee from our catalog.
+              </p>
+            )}
 
             <div className="mt-4 grid gap-3 sm:grid-cols-[1.35fr_1fr]">
               <button

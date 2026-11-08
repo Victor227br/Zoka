@@ -3,7 +3,6 @@ import {
   IoBagHandleOutline,
   IoCubeOutline,
   IoGridOutline,
-  IoNotificationsOutline,
 } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import profileIcon from "../assets/icon/icon_profile.png";
@@ -45,13 +44,7 @@ const AdminPage = () => {
         </Link>
 
         <nav className="flex items-center gap-5">
-          <button
-            type="button"
-            aria-label="Notifications"
-            className="text-2xl text-slate-400 transition hover:text-[#0344DC]"
-          >
-            <IoNotificationsOutline />
-          </button>
+          <Link to="/orders" className="text-sm font-semibold text-blue-700">My orders</Link>
           <img className="h-9" src={profileIcon} alt="Administrator profile" />
         </nav>
       </header>

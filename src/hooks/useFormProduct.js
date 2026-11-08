@@ -1,8 +1,9 @@
 import { useContext, useState } from "react"
 import { ProductsContext } from "../context/productsContext"
+import { hasDuplicateName } from "../utils/validation"
 
 export const useFormProduct = () => {
-  const {editingProduct, addProduct, editProduct, closeForm} = useContext(ProductsContext)
+  const {products, editingProduct, addProduct, editProduct, closeForm} = useContext(ProductsContext)
 
   const [formData, setFormData] = useState(() => editingProduct || {
     id: new Date().getTime().toString(),
@@ -16,23 +17,30 @@ export const useFormProduct = () => {
   });
 
   const textValueButton = editingProduct ? "Edit Product" : "Save Product"
+  const nameError = hasDuplicateName(products, formData.name, editingProduct?.id)
+    ? "A product with this name already exists. Choose another name."
+    : ""
 
   const validForm = 
     !formData.name.trim() ||
     !formData.description.trim() ||
     (formData.type !== "Package" && !formData.img.trim()) ||
-    !formData.price ||
-    !formData.stock
+    !Number.isFinite(Number(formData.price)) || Number(formData.price) <= 0 ||
+    formData.stock === "" || !Number.isInteger(Number(formData.stock)) || Number(formData.stock) < 0
 
   const handleSubmit = (event) => {
     event.preventDefault() 
+    if (nameError) {
+      return
+    }
     if (validForm){
       window.alert("Fill in all the input fields")
+      return
     } else{
       if(editingProduct){
-        editProduct(formData)
+        editProduct({...formData, price: Number(formData.price), stock: Number(formData.stock), status: Number(formData.stock) === 0 ? "inactive" : formData.status.toLowerCase()})
       } else{
-        addProduct(formData)
+        addProduct({...formData, price: Number(formData.price), stock: Number(formData.stock), status: Number(formData.stock) === 0 ? "inactive" : formData.status.toLowerCase()})
       }
     }
     closeForm()
@@ -42,6 +50,7 @@ export const useFormProduct = () => {
     formData, 
     textValueButton,
     validForm,
+    nameError,
     setFormData,
     handleSubmit
   }

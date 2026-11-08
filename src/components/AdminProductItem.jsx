@@ -1,6 +1,9 @@
 import { ProductsContext } from "../context/productsContext";
 import { useContext } from "react";
 import coffeePackageImage from "../assets/picture/coffee_package.png";
+import editIcon from "../assets/icon/icon_edit.png";
+import trashIcon from "../assets/icon/icon_trash.png";
+import { formatPrice } from "../utils/shop";
 
 const AdminProductItem = ({product, openForm}) => {
   const {id, img, name, price, stock, type, status} = product;
@@ -19,7 +22,7 @@ return (
       <div className="flex flex-col justify-center gap-1 min-w-0">
         <h3 className="font-bold text-[#1D3557] text-xs truncate">{name}</h3>
         <p className="text-[#0344DC] text-xs font-medium truncate">{type}</p>
-        <p className="text-xs text-slate-500">${price}</p>
+        <p className="text-xs text-slate-500">{formatPrice(price)}</p>
       </div>
     </div>
 
@@ -43,6 +46,7 @@ return (
     <div className="flex items-center gap-2 shrink-0">
       <button
         onClick={() => openForm(id)}
+        aria-label={`Edit ${name}`}
         className="
           w-9 h-9
           rounded-lg
@@ -52,12 +56,13 @@ return (
 
         <img
           className="h-7"
-          src="/src/assets/icon/icon_edit.png"
+          src={editIcon}
           alt=""/>
       </button>
 
       <button
         onClick={() => removeProduct(id)}
+        aria-label={`Delete ${name}`}
         className="
           w-9 h-9
           rounded-lg
@@ -66,7 +71,7 @@ return (
           lg:w-10 lg:h-10">
         <img
           className="h-6"
-          src="/src/assets/icon/icon_trash.png"
+          src={trashIcon}
           alt=""/>
       </button>
       

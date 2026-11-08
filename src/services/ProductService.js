@@ -9,7 +9,13 @@ export const getItem = () => {
     localStorage.setItem("productsDataVersion", "2");
     return productsData;
   } else {
-    const products = JSON.parse(getProduct);
+    let products;
+    try {
+      products = JSON.parse(getProduct);
+      if (!Array.isArray(products) || products.some((product) => !product || product.id == null || typeof product.name !== "string" || !Number.isFinite(Number(product.price)) || !Number.isFinite(Number(product.stock)))) return productsData;
+    } catch {
+      return productsData;
+    }
 
     if (getVersion !== "2") {
       const updatedProducts = [...products];

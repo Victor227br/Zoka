@@ -8,9 +8,10 @@ export const useOrderActions = () => {
     saveOrders(orders);
   }, [orders]);
 
-  const addOrder = (cartItems, total) => {
+  const addOrder = (cartItems, total, customer = null) => {
     const order = {
-      id: `ZK-${Date.now().toString().slice(-8)}`,
+      id: `ZK-${crypto.randomUUID()}`,
+      customer,
       createdAt: new Date().toISOString(),
       status: "Completed",
       total: Number(total.toFixed(2)),

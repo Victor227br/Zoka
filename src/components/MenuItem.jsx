@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import coffeePackageImage from "../assets/picture/coffee_package.png";
+import { formatPrice } from "../utils/shop";
 
 const MenuItem = ({product}) => {
   const {id, name, img, price, type, description} = product;
   const productImage = type === "Package" ? coffeePackageImage : img;
+  const isAvailable = product.status?.toLowerCase() === "active" && Number(product.stock) > 0;
 
 return(
    <Link to={`/product/${id}`}>
@@ -48,6 +50,11 @@ return(
     <div>
       <h2 className="text-lg sm:text-xl font-bold text-[#1D3557]">{name}</h2>
       <p className="text-sm text-[#5F6368] mt-2">{description}</p>
+      {!isAvailable && (
+        <p className="mt-2 text-sm font-semibold text-amber-700">
+          {Number(product.stock) === 0 ? "Out of stock" : "Currently unavailable"}
+        </p>
+      )}
     </div>
 
     <div
@@ -62,10 +69,15 @@ return(
         md:gap-6
         lg:mt-5">
 
-      <h2 className="text-lg font-bold text-[#1D3557]">${price}</h2>
+      <h2 className="text-lg font-bold text-[#1D3557]">{formatPrice(price)}</h2>
 
-      <button
+      <span
         className="
+          flex
+          items-center
+          justify-center
+          shrink-0
+          whitespace-nowrap
           bg-[#0344DC]
           text-white
           h-9
@@ -79,12 +91,11 @@ return(
           duration-300
           md:w-20
           md:h-8
-          lg:w-22
           lg:h-7
           lg:text-sm
           ">
-        Buy
-      </button>
+        {isAvailable ? "Buy" : "Details"}
+      </span>
     </div>
   </div>
 </div>

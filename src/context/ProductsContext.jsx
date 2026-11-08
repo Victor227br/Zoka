@@ -4,6 +4,7 @@ import { ProductsContext } from "./productsContext";
 export function ProductsProvider({ children }) {
   const {
     products,
+    productMessage,
     editingProduct,
     isFormOpen,
     addProduct,
@@ -18,6 +19,7 @@ export function ProductsProvider({ children }) {
     <ProductsContext.Provider
       value={{
         products,
+        productMessage,
         editingProduct,
         isFormOpen,
         addProduct,

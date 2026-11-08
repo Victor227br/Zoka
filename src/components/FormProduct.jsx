@@ -4,8 +4,8 @@ import { useContext } from "react"
 import coffeePackageImage from "../assets/picture/coffee_package.png"
 
 const FormProduct = () => {
-  const {formData, textValueButton, validForm ,setFormData, handleSubmit} = useFormProduct()  
-  const {closeForm} = useContext(ProductsContext)
+  const {formData, textValueButton, validForm, nameError, setFormData, handleSubmit} = useFormProduct()
+  const {closeForm, editingProduct} = useContext(ProductsContext)
 
   return(
     <section
@@ -20,11 +20,12 @@ const FormProduct = () => {
 
   <div className="flex items-center justify-between mb-6">
    <div>
-    <h2 className="text-2xl font-bold text-[#1D3557]">Add Product</h2>
-    <p className="text-slate-500 text-sm mt-1">Register a new product in your menu</p>
+    <h2 className="text-2xl font-bold text-[#1D3557]">{editingProduct ? "Edit Product" : "Add Product"}</h2>
+    <p className="text-slate-500 text-sm mt-1">{editingProduct ? "Update your product details" : "Register a new product in your menu"}</p>
   </div>
   <button
     onClick={closeForm}
+    aria-label="Close product form"
     type="button"
     className="
       w-10
@@ -44,10 +45,13 @@ const FormProduct = () => {
 
   <form onSubmit={handleSubmit} className="flex flex-col gap-4">
     <div>
-      <label className="block text-sm font-medium text-slate-700 mb-2">Product Name</label>
+      <label htmlFor="form-product-name" className="block text-sm font-medium text-slate-700 mb-2">Product Name</label>
       <input
         type="text"
         name="nameProduct"
+        id="form-product-name"
+        aria-invalid={!!nameError}
+        aria-describedby={nameError ? "product-name-error" : undefined}
         value={formData.name}
         onChange={(e) => setFormData({...formData, name: e.target.value})}
         className="
@@ -58,13 +62,20 @@ const FormProduct = () => {
           border-slate-200
           outline-none
           focus:border-[#0344DC]"/>
+      {nameError && (
+        <p id="product-name-error" role="alert" className="mt-2 text-sm text-red-600">
+          {nameError}
+        </p>
+      )}
     </div>
 
     <div>
-      <label className="block text-sm font-medium text-slate-700 mb-2">Price $:</label>
+      <label htmlFor="product-price" className="block text-sm font-medium text-slate-700 mb-2">Price (BRL):</label>
       <input
         type="number"
-        min="0.00" 
+        id="product-price"
+        min="0.01"
+        step="0.01"
         max="999.99"
         value={formData.price}
         onChange={(e) => setFormData({...formData, price: e.target.value})}
@@ -80,9 +91,10 @@ const FormProduct = () => {
     </div>
 
     <div>
-      <label className="block text-sm font-medium text-slate-700 mb-2">Units in Stock</label>
+      <label htmlFor="form-product-stock" className="block text-sm font-medium text-slate-700 mb-2">Units in Stock</label>
       <input
         min="0" 
+        id="form-product-stock"
         value={formData.stock}
         onChange={(e) => setFormData({...formData, stock: e.target.value})}
         type="number"
@@ -98,9 +110,10 @@ const FormProduct = () => {
     </div>
 
     <div>
-      <label className="block text-sm font-medium text-slate-700 mb-2">Product Type</label>
+      <label htmlFor="form-product-type" className="block text-sm font-medium text-slate-700 mb-2">Product Type</label>
       <select
-      value={formData.type}
+      id="form-product-type"
+        value={formData.type}
       onChange={(e) => {
         const selectedType = e.target.value
         setFormData({
@@ -127,9 +140,10 @@ const FormProduct = () => {
     </div>
 
     <div>
-      <label className="block text-sm font-medium text-slate-700 mb-2">Status</label>
+      <label htmlFor="form-product-status" className="block text-sm font-medium text-slate-700 mb-2">Status</label>
       <select
-        value={formData.status}
+        id="form-product-status"
+        value={formData.status.toLowerCase()}
         onChange={(e) => setFormData({...formData, status: e.target.value})}
         className="
           w-full
@@ -146,7 +160,7 @@ const FormProduct = () => {
     </div>
 
     <div>
-      <label className="block text-sm font-medium text-slate-700 mb-2">Product Image</label>
+      <p className="block text-sm font-medium text-slate-700 mb-2">Product Image</p>
       {formData.type === "Package" ? (
         <div className="flex items-center gap-4 rounded-xl border border-blue-100 bg-[#F4F7FC] p-3">
           <img
@@ -164,6 +178,7 @@ const FormProduct = () => {
       ) : (
         <input
           type="url"
+          aria-label="Product image URL"
           placeholder="https://exemplo.com"
           value={formData.img}
           onChange={(e) => setFormData({...formData, img: e.target.value})}
@@ -180,10 +195,11 @@ const FormProduct = () => {
     </div>
 
     <div>
-      <label className="block text-sm font-medium text-slate-700 mb-2">Description</label>
+      <label htmlFor="form-product-description" className="block text-sm font-medium text-slate-700 mb-2">Description</label>
       <textarea
         rows="4"
         placeholder="Write a short description..."
+        id="form-product-description"
         value={formData.description}
         onChange={(e) => setFormData({...formData, description: e.target.value})}
         className="
@@ -199,7 +215,7 @@ const FormProduct = () => {
 
     <div className="flex gap-3 mt-2">
       <button
-      disabled={validForm}
+      disabled={validForm || !!nameError}
         type="submit"
         className="
           flex-1
@@ -216,6 +232,7 @@ const FormProduct = () => {
       </button>
 
     </div>
+    {validForm && <p className="text-sm text-slate-500">Enter a name, description, image URL for drinks, price greater than zero, and a whole stock quantity of zero or more to save.</p>}
   </form>
 </section>
 )

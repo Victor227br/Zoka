@@ -1,10 +1,12 @@
 import { useState, useEffect} from "react";
 import { getItem, setItem } from "../services/ProductService";
+import { hasDuplicateName } from "../utils/validation";
 
 export const useProductsActions = () => {
   const [isFormOpen, setIsFormOpen ] = useState(false)
   const [products, setProducts] = useState(getItem())
   const [editingProduct, setEditingProduct] = useState(null)
+  const [productMessage, setProductMessage] = useState("")
 
   const openForm = (id) => {
     const findProduct = products.find(product => product.id === id)
@@ -18,7 +20,11 @@ export const useProductsActions = () => {
   }
 
   const addProduct = (product) => {
-    return setProducts([...products, product])
+    if (hasDuplicateName(products, product.name)) {
+      return false
+    }
+    setProducts((currentProducts) => [...currentProducts, product])
+    setProductMessage(`${product.name} was added successfully.`)
   }
 
   useEffect(() => {
@@ -26,21 +32,26 @@ export const useProductsActions = () => {
   },[products])
 
   const removeProduct = (id) => {
+    if (!window.confirm("Delete this product? Existing orders will be preserved.")) return;
     const deleteProduct = products.filter(product => product.id !== id)
-    return setProducts(deleteProduct)
+    setProducts(deleteProduct)
+    setProductMessage("Product deleted successfully.")
   }
 
   const editProduct = (updatedProduct) => {
+    if (hasDuplicateName(products, updatedProduct.name, updatedProduct.id)) {
+      return false
+    }
+    setProductMessage(`${updatedProduct.name} was updated successfully.`)
     setProducts((currentProducts) =>
-    currentProducts.map((product) =>
-      product.id === updatedProduct.id ? updatedProduct : product))
+    currentProducts.map((product) => product.id === updatedProduct.id ? updatedProduct : product))
   }
 
   const purchaseProducts = (cartItems) => {
     const unavailableProduct = cartItems.find((cartItem) => {
       const product = products.find((item) => item.id.toString() === cartItem.id.toString())
       const requestedQuantity = cartItems.filter((item) => item.id.toString() === cartItem.id.toString()).reduce((total, item) => total + item.quantity, 0)
-      return !product || requestedQuantity > Number(product.stock)
+      return !product || product.status?.toLowerCase() !== "active" || requestedQuantity > Number(product.stock)
     })
 
     if (unavailableProduct) {
@@ -65,6 +76,7 @@ export const useProductsActions = () => {
 
   return {
     products,
+    productMessage,
     editingProduct,
     isFormOpen,
     addProduct,

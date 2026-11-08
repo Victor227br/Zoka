@@ -2,11 +2,7 @@ import { useState, useContext } from "react";
 import { ProductsContext } from "../context/productsContext";
 
 const normalizeText = (text) => {
-  return String(text || "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .trim();
+  return String(text || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 };
 
 export const useProductsFilters = () => {
@@ -18,7 +14,6 @@ export const useProductsFilters = () => {
   const normalizedSearch = normalizeText(search);
 
   const filteredProducts = products.filter((product) => {
-
     const productText = `${product.name} ${product.type} ${product.description}`;
     const searchFilter = normalizedSearch === "" || normalizeText(productText).includes(normalizedSearch);
     const categoryFilter = category === "All" || product.type === category;

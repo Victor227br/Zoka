@@ -1,5 +1,8 @@
 import AdminProductItem from "./AdminProductItem"
 import FormProduct from "./FormProduct"
+import boxIcon from "../assets/icon/icon_box.png";
+import discountIcon from "../assets/icon/icon_discount.png";
+import blockIcon from "../assets/icon/icon_block.png";
 import { useContext } from "react";
 import { ProductsContext } from "../context/productsContext";
 import { useProductsFilters } from "../hooks/useProductsFilters";
@@ -12,7 +15,7 @@ import {
 } from "react-icons/io5";
 
 const ManageProducts = () => {
-  const {isFormOpen ,openForm} = useContext(ProductsContext)
+  const {isFormOpen ,openForm, productMessage} = useContext(ProductsContext)
   
   const {  
    search,
@@ -32,6 +35,7 @@ const ManageProducts = () => {
 
   return(
       <>
+  {productMessage && <p role="status" className="m-4 rounded-xl bg-emerald-100 p-4 text-emerald-800">{productMessage}</p>}
   <section className="sm:flex flex-col justify-center lg:flex-row justify-between lg: m-4">
     <div>
       <h1 className="text-3xl mb-2 font-bold sm: text-center lg:text-left">Products</h1>
@@ -109,7 +113,7 @@ const ManageProducts = () => {
     bg-[#E1E9F9] 
     rounded-full shrink-0">
 
-      <img src="/src/assets/icon/icon_box.png" alt="" />
+      <img src={boxIcon} alt="" />
 
     </div>
     <div className="flex flex-col items-center">
@@ -181,7 +185,7 @@ const ManageProducts = () => {
     bg-[#E1E9F9] 
     rounded-full 
     shrink-0">
-      <img src="/src/assets/icon/icon_discount.png" alt="" />
+      <img src={discountIcon} alt="" />
     </div>
 
     <div className="flex flex-col items-center">
@@ -217,7 +221,7 @@ const ManageProducts = () => {
     bg-[#E1E9F9] 
     rounded-full 
     shrink-0">
-      <img src="/src/assets/icon/icon_block.png" alt="" />
+      <img src={blockIcon} alt="" />
     </div>
 
     <div className="flex flex-col items-center">
@@ -371,6 +375,7 @@ const ManageProducts = () => {
   )}
 </section>
 <section>
+  {!filteredProducts.length && <p className="m-4 rounded-xl bg-white p-8 text-center text-slate-500">No products found. Try another search or clear the filters.</p>}
   {
     filteredProducts.map((product) =>{
     const {id} = product;
