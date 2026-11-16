@@ -2,7 +2,7 @@
 
 Aplicação de uma cafeteria desenvolvida com React, com catálogo de produtos, carrinho, finalização de pedidos e painel administrativo. O projeto conecta a experiência de compra ao gerenciamento de produtos, estoque e indicadores de vendas.
 
-Construí o Zoka como parte do meu aprendizado em desenvolvimento front-end. Antes de começar, eu ainda não sabia o que era React e precisei aprender grande parte dos conceitos durante a construção da aplicação.
+Construí o Zoka como parte do meu aprendizado em desenvolvimento front-end. Antes de começar, eu sabia o básico que era React e precisei aprender grande parte dos conceitos durante a construção da aplicação.
 
 ## Funcionalidades
 
@@ -61,7 +61,6 @@ O projeto funciona no navegador, sem configurar backend, banco de dados ou vari�
 
 ## Principais aprendizados e desafios
 
-- **Aprender React do zero:** entender componentes, props, JSX e estado foi a maior mudança na minha forma de construir interfaces. Aprendi a fazer a tela responder às ações do usuário a partir dos dados da aplicação.
 - **Compartilhar estado entre diferentes páginas:** usar a Context API e criar hooks personalizados me ajudou a conectar catálogo, carrinho, checkout e administração, mantendo as regras organizadas fora dos componentes visuais.
 - **Construir um fluxo de compra consistente:** um dos desafios mais importantes foi validar a disponibilidade dos produtos, controlar quantidades e atualizar o estoque ao concluir um pedido, desativando produtos quando o estoque chega a zero.
 - **Persistir dados e preservar o histórico:** aprendi a combinar `useEffect`, `localStorage` e serialização em JSON para manter informações após recarregar a página. Também trabalhei com cópias dos dados dos itens nos pedidos, preservando o histórico mesmo quando um produto é alterado ou excluído.
