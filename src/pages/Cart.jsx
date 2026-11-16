@@ -15,7 +15,7 @@ import Header from "../components/Header";
 import { CartContext } from "../context/cartContext";
 import { ProductsContext } from "../context/productsContext";
 import { useBackNavigation } from "../hooks/useBackNavigation";
-import { getCartIssues } from "../utils/shop";
+import { getCartIssues, getAvailableCartQuantity } from "../utils/shop";
 
 const formatPrice = (price) =>
   new Intl.NumberFormat("pt-BR", {
@@ -100,10 +100,6 @@ const Cart = () => {
             {cart.length > 0 ? (
               <div className="space-y-4">
                 {cart.map((item) => {
-                  const quantityForProduct = cart
-                    .filter((cartItem) => cartItem.id === item.id)
-                    .reduce((total, cartItem) => total + cartItem.quantity, 0);
-
                   return (
                     <CartItem
                       key={`${item.id}-${item.size}`}
@@ -114,7 +110,7 @@ const Cart = () => {
                       unitPrice={formatPrice(item.price)}
                       totalPrice={formatPrice(item.price * item.quantity)}
                       quantity={item.quantity}
-                      canIncrease={quantityForProduct < Number(products.find((product) => String(product.id) === String(item.id))?.stock || 0)}
+                      canIncrease={getAvailableCartQuantity(cart, products, item.id) > 0}
                       canDecrease={item.quantity > 1}
                       onIncrease={() => increaseQuantity(item.id, item.size)}
                       onDecrease={() => decreaseQuantity(item.id, item.size)}

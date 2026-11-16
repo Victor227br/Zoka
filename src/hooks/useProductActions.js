@@ -1,6 +1,7 @@
 import { useState, useEffect} from "react";
 import { getItem, setItem } from "../services/ProductService";
 import { hasDuplicateName } from "../utils/validation";
+import { getPurchasedProducts } from "../utils/shop";
 
 export const useProductsActions = () => {
   const [isFormOpen, setIsFormOpen ] = useState(false)
@@ -48,27 +49,11 @@ export const useProductsActions = () => {
   }
 
   const purchaseProducts = (cartItems) => {
-    const unavailableProduct = cartItems.find((cartItem) => {
-      const product = products.find((item) => item.id.toString() === cartItem.id.toString())
-      const requestedQuantity = cartItems.filter((item) => item.id.toString() === cartItem.id.toString()).reduce((total, item) => total + item.quantity, 0)
-      return !product || product.status?.toLowerCase() !== "active" || requestedQuantity > Number(product.stock)
-    })
+    const updatedProducts = getPurchasedProducts(products, cartItems)
 
-    if (unavailableProduct) {
+    if (!updatedProducts) {
       return false
     }
-
-    const updatedProducts = products.map((product) => {
-      const purchasedQuantity = cartItems
-        .filter((item) => item.id.toString() === product.id.toString())
-        .reduce((total, item) => total + item.quantity, 0)
-
-      if (purchasedQuantity === 0) {
-        return product
-      }
-      const updatedStock = Number(product.stock) - purchasedQuantity
-      return {...product,stock: updatedStock,status: updatedStock === 0 ? "Inactive" : product.status,}
-    })
 
     setProducts(updatedProducts)
     return true

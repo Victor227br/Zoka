@@ -3,6 +3,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import { OrdersContext } from "../context/ordersContext";
 import { formatPrice } from "../utils/shop";
+import { getOrderStatus, orderStatuses } from "../utils/orders";
 
 const formatDate = (date) => {
   return new Intl.DateTimeFormat("en-US", {
@@ -44,11 +45,22 @@ const Orders = () => {
                 <strong>{formatPrice(order.total)}</strong>
               </div>
               <p className="my-3 text-sm text-slate-500">
-                {formatDate(order.createdAt)} · {order.status}
+                {formatDate(order.createdAt)} · {getOrderStatus(order.status)}
               </p>
 
               {id ? (
                 <>
+                  <ol aria-label="Order progress" className="my-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                    {orderStatuses.map((status, index) => {
+                      const currentIndex = orderStatuses.indexOf(getOrderStatus(order.status));
+                      return (
+                        <li key={status} aria-current={index === currentIndex ? "step" : undefined}
+                          className={`rounded-xl p-3 text-sm ${index <= currentIndex ? "bg-blue-100 font-bold text-blue-800" : "bg-slate-100 text-slate-500"}`}>
+                          {index + 1}. {status}
+                        </li>
+                      );
+                    })}
+                  </ol>
                   <ul className="divide-y">
                     {order.items.map((item) => (
                       <li key={`${item.id}-${item.size}`} className="flex justify-between gap-4 py-4">

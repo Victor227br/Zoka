@@ -35,7 +35,7 @@ export const getCartIssues = (cart, products) => {
       return
     }
 
-    if (!Number.isInteger(item.quantity) || item.quantity < 1 || quantityInCart > Number(product.stock)) {
+    if (!Number.isInteger(item.quantity) || item.quantity < 1 || !Number.isFinite(Number(product.stock)) || quantityInCart > Number(product.stock)) {
       issues.push(`Review the quantity of ${item.name}; available stock: ${product.stock}.`)
       return
     }
@@ -48,4 +48,36 @@ export const getCartIssues = (cart, products) => {
   })
 
   return issues
+}
+
+// Stock is shared by all sizes of the same product.
+export const getAvailableCartQuantity = (cart, products, id) => {
+  const product = products.find((item) => String(item.id) === String(id));
+  if (!product || product.status?.toLowerCase() !== "active") return 0;
+  const stock = Number(product.stock);
+  if (!Number.isFinite(stock) || stock <= 0) return 0;
+  const quantity = cart.filter((item) => String(item.id) === String(id))
+    .reduce((total, item) => total + item.quantity, 0);
+  return Math.max(0, Math.floor(stock) - quantity);
+};
+
+export const getPurchasedProducts = (products, cartItems) => {
+  if (cartItems.length === 0 || getCartIssues(cartItems, products).length > 0) {
+    return false
+  }
+
+  const updatedProducts = products.map((product) => {
+    const purchasedQuantity = cartItems
+      .filter((item) => String(item.id) === String(product.id))
+      .reduce((total, item) => total + item.quantity, 0)
+
+    if (purchasedQuantity === 0) {
+      return product
+    }
+
+    const updatedStock = Number(product.stock) - purchasedQuantity
+    return {...product, stock: updatedStock, status: updatedStock === 0 ? "Inactive" : product.status}
+  })
+
+  return updatedProducts
 }

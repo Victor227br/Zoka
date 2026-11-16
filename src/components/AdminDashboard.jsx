@@ -55,7 +55,7 @@ const AdminDashboard = () => {
     {
       label: "Revenue",
       value: formatPrice(totalRevenue),
-      detail: "Completed orders",
+      detail: "Placed demo orders",
       icon: IoCashOutline,
     },
     {

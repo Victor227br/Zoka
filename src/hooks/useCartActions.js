@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { getAvailableCartQuantity } from "../utils/shop";
+import { ProductsContext } from "../context/productsContext";
 import { getCart, saveCart } from "../services/CartService";
 
 export const useCartActions = () => {
+  const { products } = useContext(ProductsContext);
   const [cart, setCart] = useState(() => getCart());
 
   useEffect(() => {
@@ -9,9 +12,7 @@ export const useCartActions = () => {
   }, [cart]);
 
   const addItemCart = (newItem) => {
-    const quantityInCart = cart.filter((item) => item.id === newItem.id).reduce((total, item) => total + item.quantity, 0);
-
-    const availableQuantity = Number(newItem.stock) - quantityInCart;
+    const availableQuantity = getAvailableCartQuantity(cart, products, newItem.id);
 
     if (availableQuantity <= 0) {
       return false;
@@ -19,11 +20,11 @@ export const useCartActions = () => {
 
     if (!Number.isInteger(newItem.quantity) || newItem.quantity < 1 || newItem.quantity > availableQuantity) return false;
     const quantityToAdd = newItem.quantity;
-    const itemAlreadyExists = cart.find((item) => item.id === newItem.id && item.size === newItem.size,);
+    const itemAlreadyExists = cart.find((item) => String(item.id) === String(newItem.id) && item.size === newItem.size,);
 
     if (itemAlreadyExists) {
       const updatedCart = cart.map((item) => {
-        if (item.id === newItem.id && item.size === newItem.size) {
+        if (String(item.id) === String(newItem.id) && item.size === newItem.size) {
           return {...item, quantity: item.quantity + quantityToAdd};
         }
 
@@ -39,26 +40,24 @@ export const useCartActions = () => {
   };
 
   const removeItemCart = (id, size) => {
-    const updatedCart = cart.filter((item) => item.id !== id || item.size !== size,);
+    const updatedCart = cart.filter((item) => String(item.id) !== String(id) || item.size !== size,);
 
     setCart(updatedCart);
   };
 
   const increaseQuantity = (id, size) => {
-    const selectedItem = cart.find((item) => item.id === id && item.size === size,);
+    const selectedItem = cart.find((item) => String(item.id) === String(id) && item.size === size,);
 
     if (!selectedItem) {
       return;
     }
 
-    const quantityInCart = cart.filter((item) => item.id === id).reduce((total, item) => total + item.quantity, 0);
-
-    if (quantityInCart >= Number(selectedItem.stock)) {
+    if (getAvailableCartQuantity(cart, products, id) < 1) {
       return;
     }
 
     const updatedCart = cart.map((item) => {
-      if (item.id === id && item.size === size) {
+      if (String(item.id) === String(id) && item.size === size) {
         return {...item, quantity: item.quantity + 1};
       }
 
@@ -70,7 +69,7 @@ export const useCartActions = () => {
 
   const decreaseQuantity = (id, size) => {
     const updatedCart = cart.map((item) => {
-      if (item.id === id && item.size === size && item.quantity > 1) {
+      if (String(item.id) === String(id) && item.size === size && item.quantity > 1) {
         return {...item, quantity: item.quantity - 1};
       }
 

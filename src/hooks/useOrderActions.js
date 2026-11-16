@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getOrders, saveOrders } from "../services/OrderService";
+import { createOrder, getNextOrderStatus } from "../utils/orders";
 
 export const useOrderActions = () => {
   const [orders, setOrders] = useState(() => getOrders());
@@ -9,28 +10,22 @@ export const useOrderActions = () => {
   }, [orders]);
 
   const addOrder = (cartItems, total, customer = null) => {
-    const order = {
-      id: `ZK-${crypto.randomUUID()}`,
-      customer,
-      createdAt: new Date().toISOString(),
-      status: "Completed",
-      total: Number(total.toFixed(2)),
-      items: cartItems.map((item) => ({
-        id: item.id,
-        name: item.name,
-        type: item.type,
-        image: item.image,
-        size: item.size,
-        price: item.price,
-        quantity: item.quantity,
-      })),
-    };
+    const order = createOrder(cartItems, total, customer);
 
     setOrders((currentOrders) => [order, ...currentOrders]);
     return order;
   };
 
+  const advanceOrderStatus = (id) => {
+    setOrders((currentOrders) => currentOrders.map((order) => {
+      if (order.id !== id) return order;
+      const status = getNextOrderStatus(order.status);
+      return status ? { ...order, status } : order;
+    }));
+  };
+
   return {
+    advanceOrderStatus,
     orders,
     addOrder,
   };

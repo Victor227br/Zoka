@@ -1,10 +1,13 @@
-﻿# Zoka ☕
+# Zoka ☕
 
 Aplicação de uma cafeteria desenvolvida com React, com catálogo de produtos, carrinho, finalização de pedidos e painel administrativo. O projeto conecta a experiência de compra ao gerenciamento de produtos, estoque e indicadores de vendas.
 
 Construí o Zoka como parte do meu aprendizado em desenvolvimento front-end. Antes de começar, eu sabia o básico que era React e precisei aprender grande parte dos conceitos durante a construção da aplicação.
 
 ## Funcionalidades
+
+Os pedidos seguem as etapas `Received` ? `Preparing` ? `Ready` ? `Delivered`, atualizadas pelo administrador e exibidas nos detalhes do pedido. O carrinho consulta o estoque atual do cat?logo, considerando todos os tamanhos do mesmo produto.
+
 
 - Catálogo com busca, filtros e página de detalhes de cada produto.
 - Carrinho com controle de quantidades e cálculo do subtotal.
@@ -54,6 +57,7 @@ Para explorar o fluxo, adicione um produto ao carrinho, conclua uma compra demon
 ```bash
 npm run build    # Gera a versão de produção na pasta dist
 npm run preview  # Serve o build localmente, após executar o build
+npm test         # Testa estoque, compras, pedidos e nomes duplicados
 npm run lint     # Executa a análise estática do código
 ```
 

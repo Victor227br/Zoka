@@ -5,6 +5,7 @@ import {
   IoReceiptOutline,
 } from "react-icons/io5";
 import { OrdersContext } from "../context/ordersContext";
+import { getOrderStatus, getNextOrderStatus } from "../utils/orders";
 
 const formatPrice = (price) =>
   new Intl.NumberFormat("pt-BR", {
@@ -19,7 +20,7 @@ const formatDate = (date) =>
   }).format(new Date(date));
 
 const AdminOrders = () => {
-  const {orders} = useContext(OrdersContext);
+  const {orders, advanceOrderStatus} = useContext(OrdersContext);
 
   return (
     <section className="p-4">
@@ -30,7 +31,7 @@ const AdminOrders = () => {
           </p>
           <h1 className="mt-2 text-3xl font-bold text-[#1D3557]">Orders</h1>
           <p className="mt-2 text-slate-500">
-            Purchases completed in this browser.
+            Track and update orders saved in this browser.
           </p>
         </div>
 
@@ -68,7 +69,7 @@ const AdminOrders = () => {
                     <div className="flex flex-wrap items-center gap-3">
                       <h2 className="text-lg font-bold text-[#1D3557]">{order.id}</h2>
                       <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">
-                        {order.status}
+                        {getOrderStatus(order.status)}
                       </span>
                     </div>
                     <p className="mt-2 flex items-center gap-2 text-sm text-slate-500">
@@ -78,6 +79,16 @@ const AdminOrders = () => {
                   </div>
 
                   <div className="sm:text-right">
+                    {getNextOrderStatus(order.status) && (
+                      <button
+                        type="button"
+                        onClick={() => advanceOrderStatus(order.id)}
+                        aria-label={`Update order ${order.id} to ${getNextOrderStatus(order.status)}`}
+                        className="mb-3 rounded-xl bg-blue-700 px-4 py-2 text-sm font-bold text-white hover:bg-blue-800"
+                      >
+                        Mark as {getNextOrderStatus(order.status)}
+                      </button>
+                    )}
                     <p className="text-sm text-slate-400">
                       {totalItems} {totalItems === 1 ? "item" : "items"}
                     </p>
