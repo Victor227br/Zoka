@@ -1,6 +1,4 @@
 export const orderStatuses = ["Received", "Preparing", "Ready", "Delivered"];
-
-// Orders saved before the preparation flow already represented completed purchases.
 export const getOrderStatus = (status) => status === "Completed" ? "Delivered" : status;
 
 export const getNextOrderStatus = (status) => {

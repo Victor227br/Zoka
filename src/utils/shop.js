@@ -49,8 +49,6 @@ export const getCartIssues = (cart, products) => {
 
   return issues
 }
-
-// Stock is shared by all sizes of the same product.
 export const getAvailableCartQuantity = (cart, products, id) => {
   const product = products.find((item) => String(item.id) === String(id));
   if (!product || product.status?.toLowerCase() !== "active") return 0;
